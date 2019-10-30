@@ -8,15 +8,6 @@ from random import randint, choice
 import os
 import sys
 
-a = 0
-b = 0
-
-def c():
-    return (lambda:5)
-
-def fn():
-    return randint(0, 40)
-
 # returns a sorted list of all commit dates and times
 def getAllCommits(userName, contributor_count):
     g = Github(os.environ['ACC_TOKEN_SWENG_GH'])
@@ -26,7 +17,6 @@ def getAllCommits(userName, contributor_count):
     for repo in repos:
         print("Repo: " + str(i) + " of " + str(repos.totalCount))
         i += 1
-        a = i
         authList = list(repo.get_contributors())
         if authList[0].login == userName and len(authList) == contributor_count:
 
@@ -42,11 +32,12 @@ def getAllCommits(userName, contributor_count):
 def fireWorksAtTime(screen):
     scenes = []
     effects = []
-    effects.append(PalmFirework(screen, 
-            randint(0, screen.width),
-            randint(screen.height // 8, screen.height * 3 // 4),
-            randint(25, 40),
-            start_frame=randint(0, 250)))
+    for x in range(0, 50):
+        effects.append(PalmFirework(screen, 
+                randint(0, screen.width),
+                randint(screen.height // 8, screen.height * 3 // 4),
+                randint(25, 40),
+                start_frame=randint(0, 250)))
     
     scenes.append(Scene(effects, -1))
     screen.play(scenes, stop_on_resize=True)
@@ -55,25 +46,55 @@ def fireWorksAtTime(screen):
         return
 
 
-def loadingGraph(screen):
-    scenes = []
-    effects = [Print(screen,
-                  BarChart(1, 40, [fn],
-                           char="=",
-                           gradient=[(20, Screen.COLOUR_GREEN),
-                                     (30, Screen.COLOUR_YELLOW),
-                                     (40, Screen.COLOUR_RED)],
-                                     border=False),
-                  x=13, y=1, transparent=False, speed=2),]
-    scenes.append(Scene(effects,-1))
-    screen.play(scenes, stop_on_resize=True)
-    commList = getAllCommits("dartse", 1)
-    for date in commList:
-        f1.write(str(date)+"\n")
-    ev = screen.get_key()
-    if ev in (ord('Q'), ord('q')):
-        exit(1)
-        return
+# def loadingGraph(screen):
+#     scenes.append(Scene(effects,-1))
+#     screen.play(scenes, stop_on_resize=True)
+#     commList = getAllCommits("dartse", 1)
+#     for date in commList:
+#         f1.write(str(date)+"\n")
+#     ev = screen.get_key()
+#     if ev in (ord('Q'), ord('q')):
+#         exit(1)
+#         return
+
+def getAllCommits2(screen, userName, contributor_count):
+    g = Github(os.environ['ACC_TOKEN_SWENG_GH'])
+    repos = g.get_user().get_repos()
+    i = 1
+    commList = []
+    for repo in repos:
+        a = '#'*(repos.totalCount - i)
+        screen.clear()
+        screen.print_at("Repos Remaining", 1,0)
+        screen.print_at("R"*repos.totalCount, 1,1)
+        screen.print_at(a, 1,2)
+        screen.refresh()
+        i += 1
+        authList = list(repo.get_contributors())
+        if authList[0].login == userName and len(authList) == contributor_count:
+
+            commitList = repo.get_commits()
+            j = 1
+            for commit in commitList:
+                screen.print_at("Commits Remaining", 1,3)                
+                screen.print_at("C"*commitList.totalCount,1,4)
+                screen.print_at("#"*j, 1,5)
+                screen.refresh()
+                j+=1
+                commList.append(repo.get_commit(commit.sha).commit.author.date)
+    commList.sort()
+    return commList
+
+
+def manBar(screen):
+    screen.print_at("=", 10, 10)
+    leVals = getAllCommits2(screen, "dartse", 1)
+    f1 = open('commits.txt', 'w+')
+    f1.write(str(leVals) + "\n")
+    f1.close
+    screen.refresh()
+    return leVals
+
 
 
 # Main-y bit
@@ -86,11 +107,11 @@ if sys.argv[1] == '0':
     Screen.wrapper(fireWorksAtTime)
     
 elif sys.argv[1] == '1':
-    f1 = open('commits.txt', 'w+')
     
-    Screen.wrapper(loadingGraph)
     
-    f1.close
+    Screen.wrapper(manBar)
+    
+    
 else:
     print("err, invalid console input")
     exit(1)
