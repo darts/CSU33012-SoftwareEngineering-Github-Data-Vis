@@ -12,7 +12,10 @@ a = 0
 b = 0
 
 def c():
-    return lambda:a
+    return (lambda:5)
+
+def fn():
+    return randint(0, 40)
 
 # returns a sorted list of all commit dates and times
 def getAllCommits(userName, contributor_count):
@@ -54,21 +57,22 @@ def fireWorksAtTime(screen):
 
 def loadingGraph(screen):
     scenes = []
-    Print(screen,
-                BarChart(
-                      10, 80,
-                      [c],
-                      colour=[c for c in range(1, 8)],
-                      bg=[c for c in range(1, 8)],
-                      scale=2.0,
-                      axes=BarChart.X_AXIS,
-                      intervals=0.5,
-                      labels=True,
-                      border=False),
-                  x=3, y=13, transparent=False, speed=2)
+    effects = [Print(screen,
+                  BarChart(1, 40, [fn],
+                           char="=",
+                           gradient=[(20, Screen.COLOUR_GREEN),
+                                     (30, Screen.COLOUR_YELLOW),
+                                     (40, Screen.COLOUR_RED)],
+                                     border=False),
+                  x=13, y=1, transparent=False, speed=2),]
+    scenes.append(Scene(effects,-1))
     screen.play(scenes, stop_on_resize=True)
+    commList = getAllCommits("dartse", 1)
+    for date in commList:
+        f1.write(str(date)+"\n")
     ev = screen.get_key()
     if ev in (ord('Q'), ord('q')):
+        exit(1)
         return
 
 
@@ -83,10 +87,9 @@ if sys.argv[1] == '0':
     
 elif sys.argv[1] == '1':
     f1 = open('commits.txt', 'w+')
-    commList = getAllCommits("dartse", 1)
+    
     Screen.wrapper(loadingGraph)
-    for date in commList:
-        f1.write(str(date)+"\n")
+    
     f1.close
 else:
     print("err, invalid console input")
