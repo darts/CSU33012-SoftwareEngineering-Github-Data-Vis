@@ -91,7 +91,7 @@ let simplifyCommitTimes = function(rawData, names){
 }
 
 let drawCommitTimeGraphs = function(theArr, names){
-    let xArr = [...Array(168).keys()]
+    let xArr = buildTimes()
     let labels = [...Array(theArr.length).keys()]
     labels[0] = "<button onclick=\"console.log('redraw')\">Click me</button>"
     let traceArr = []
