@@ -17,12 +17,22 @@ const octokit = Octokit({
 
 // ********************
 // get commit time data
-let ppp = octokit.repos.listForUser({
+let usrPromise = octokit.repos.listForUser({
     username: input
 })
 
-ppp.then(function (result) {
-    // console.log(result.data);
+usrPromise.then(function (result) {
+    // getPunchAbility(result); // get punch cards 
+
+    // getLangStats(result); // get languages
+    
+    getCommuStats(result); // 
+}, function (err) {
+    console.log(err);
+})
+
+//returns an array of (an array of time values for commits)
+let getPunchAbility = function(result){
     let pAr = [];
     result.data.forEach(e => {
         pAr.push(
@@ -32,31 +42,42 @@ ppp.then(function (result) {
         }))
     });
     Promise.all(pAr).then(repos => {
-        repos.map(e => e.data).forEach(repo => {
-            console.log(repo);
-        })
+        return repos.map(e => e.data);
     })
-
-    // dankGetLangDeets(result.data[0], 0);
-    // result.data.forEach(dankGetLangDeets);
-    console.log(result);
-}, function (err) {
-    console.log(err);
-})
+}
 
 // ********************
 // Get lang stats
-
-let dankGetLangDeets = function(repo, index){
-    let pp = octokit.repos.listLanguages({
-        owner: input,
-        repo: repo
+// returns an array of objects containing languages
+let getLangStats = function(result){
+    let pAr = [];
+    result.data.forEach(e => {
+        pAr.push(octokit.repos.listLanguages({
+            owner: input,
+            repo: e.name
+        }))
     })
 
-    pp.then(function(result){
-        console.log(result);
-    }, function (err){
-        console.log(err);
+    Promise.all(pAr).then(langs => {
+        return langs.map(e => e.data);
     })
 }
+
+// ********************
+// get community metrics
+let getCommuStats = function(result){
+    let pAr = [];
+    result.data.forEach(e => {
+        pAr.push(octokit.repos.retrieveCommunityProfileMetrics({
+            owner: input,
+            repo: e.name
+        }))
+    })
+
+    Promise.all(pAr).then(comm => {
+        console.log(comm.map(e => e.data));
+        return comm.map(e => e.data);
+    })
+}
+
 
