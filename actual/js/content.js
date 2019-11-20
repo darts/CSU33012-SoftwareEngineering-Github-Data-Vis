@@ -1,6 +1,7 @@
 var input = window.prompt("Pick a user:", "dartse");
 
 const octokit = Octokit({
+    auth: AUTH_TOKEN,
     userAgent: 'myApp v1.2.3'
 });
 
@@ -22,27 +23,26 @@ let ppp = octokit.repos.listForUser({
 
 ppp.then(function (result) {
     // console.log(result.data);
-    result.data.forEach(dankPrintRepo);
-    dankGetLangDeets(result.data[0], 0);
+    let pAr = [];
+    result.data.forEach(e => {
+        pAr.push(
+            octokit.repos.getPunchCardStats({
+            owner: input,
+            repo: e.name
+        }))
+    });
+    Promise.all(pAr).then(repos => {
+        repos.map(e => e.data).forEach(repo => {
+            console.log(repo);
+        })
+    })
+
+    // dankGetLangDeets(result.data[0], 0);
     // result.data.forEach(dankGetLangDeets);
     console.log(result);
 }, function (err) {
     console.log(err);
 })
-
-
-let dankPrintRepo = function (repo, index) {
-    let pp = octokit.repos.getPunchCardStats({
-        owner: input,
-        repo: repo
-    })
-
-    pp.then(function (result) {
-        // console.log(result);
-    }, function (err) {
-        console.log(err);
-    })
-}
 
 // ********************
 // Get lang stats
