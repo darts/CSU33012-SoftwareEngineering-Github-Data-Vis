@@ -1,36 +1,3 @@
-var input = window.prompt("Pick a user:", "dartse");
-
-const octokit = Octokit({
-    auth: AUTH_TOKEN,
-    userAgent: 'myApp v1.2.3'
-});
-
-// ********************
-// get generic user data
-// let thePromise = octokit.users.getByUsername({ username: input });
-// thePromise.then(function (result) {
-//     console.log(result); // "Stuff worked!"
-// }, function (err) {
-//     console.log(err); // Error: "It broke"
-// });
-
-
-// ********************
-// get commit time data
-let usrPromise = octokit.repos.listForUser({
-    username: input
-})
-
-usrPromise.then(function (result) {
-    // getPunchAbility(result); // get punch cards 
-
-    // getLangStats(result); // get languages
-    
-    getCommuStats(result); // 
-}, function (err) {
-    console.log(err);
-})
-
 //returns an array of (an array of time values for commits)
 let getPunchAbility = function(result){
     let pAr = [];
@@ -42,7 +9,9 @@ let getPunchAbility = function(result){
         }))
     });
     Promise.all(pAr).then(repos => {
-        return repos.map(e => e.data);
+        // console.log(repos.map(e => e.data))
+        simplifyCommitTimes(repos.map(e => e.data))
+        return repos.map(e => e.data)
     })
 }
 
@@ -64,7 +33,7 @@ let getLangStats = function(result){
 }
 
 // ********************
-// get community metrics
+// get community metrics (inactive api)
 let getCommuStats = function(result){
     let pAr = [];
     result.data.forEach(e => {
@@ -79,5 +48,61 @@ let getCommuStats = function(result){
         return comm.map(e => e.data);
     })
 }
+
+// ********************
+// get generic user data
+let getUserStats = function(usrName){
+    let thePromise = octokit.users.getByUsername({ username: usrName });
+    thePromise.then(function (result) {
+        console.log(result); // "Stuff worked!"
+    }, function (err) {
+        console.log(err); // Error: "It broke"
+    });
+}
+
+// ********************
+// get commit data and fire off the rest
+let launcher = function(usrName){
+    let usrPromise = octokit.repos.listForUser({
+        username: usrName
+    })
+
+    usrPromise.then(function (result) {
+        getPunchAbility(result); // get punch cards 
+
+        // getLangStats(result); // get languages
+        
+        // getCommuStats(result); // currently not useable
+    }, function (err) {
+        console.log(err);
+    })
+}
+
+let simplifyCommitTimes = function(rawData){
+    let retArr = []
+    rawData.forEach(repoData => {
+        tmpArr = []
+        repoData.forEach(aTime => {
+            tmpArr.push(aTime[2])
+        })
+        retArr.push(tmpArr)
+    })
+    console.log(retArr)
+    return retArr
+}
+
+//***************************************************************
+//***************************************************************
+//***************************************************************
+
+var input = window.prompt("Pick a user:", "darts");
+
+const octokit = Octokit({
+    auth: AUTH_TOKEN,
+    userAgent: 'myApp v1.2.3'
+});
+
+getUserStats(input);
+launcher(input);
 
 
