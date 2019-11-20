@@ -22,7 +22,7 @@ let dubArr = function(arr){
 let genWidthArr = function(strips){
     let newArr = []
     for(let i = 0, j = 2; i < strips; i++){
-        let tmpArr = new Array(168).fill([i, i+1])
+        let tmpArr = new Array(168).fill([i, i+0.5])
         newArr.push(tmpArr)
     }
     return newArr
