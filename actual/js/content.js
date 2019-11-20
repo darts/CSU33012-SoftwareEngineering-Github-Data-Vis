@@ -9,7 +9,6 @@ let getPunchAbility = function(result){
         }))
     });
     Promise.all(pAr).then(repos => {
-        // console.log(repos.map(e => e.data))
         simplifyCommitTimes(repos.map(e => e.data))
         return repos.map(e => e.data)
     })
@@ -88,14 +87,29 @@ let simplifyCommitTimes = function(rawData){
         retArr.push(tmpArr)
     })
     console.log(retArr)
+    drawCommitTimeGraphs(retArr)
     return retArr
 }
 
+let drawCommitTimeGraphs = function(theArr){
+    let xArr = [...Array(168).keys()]
+    let traceArr = []
+    theArr.forEach(set => {
+        let trace = {
+            x: xArr,
+            y: set,
+            type: 'lines+markers'
+        }
+        traceArr.push(trace)
+    })
+    console.log(traceArr)
+    Plotly.newPlot('myDiv', traceArr);
+}
 //***************************************************************
 //***************************************************************
 //***************************************************************
 
-var input = window.prompt("Pick a user:", "darts");
+let input = window.prompt("Pick a user:", "darts");
 
 const octokit = Octokit({
     auth: AUTH_TOKEN,
@@ -106,3 +120,4 @@ getUserStats(input);
 launcher(input);
 
 
+//[...Array(N).keys()]
