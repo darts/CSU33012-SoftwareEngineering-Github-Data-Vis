@@ -9,7 +9,7 @@ let getPunchAbility = function(result){
         }))
     });
     Promise.all(pAr).then(repos => {
-        simplifyCommitTimes(repos.map(e => e.data))
+        simplifyCommitTimes(repos.map(e => e.data), result.data)
         return repos.map(e => e.data)
     })
 }
@@ -77,7 +77,7 @@ let launcher = function(usrName){
     })
 }
 
-let simplifyCommitTimes = function(rawData){
+let simplifyCommitTimes = function(rawData, names){
     let retArr = []
     rawData.forEach(repoData => {
         tmpArr = []
@@ -86,25 +86,31 @@ let simplifyCommitTimes = function(rawData){
         })
         retArr.push(tmpArr)
     })
-    console.log(retArr)
-    drawCommitTimeGraphs(retArr)
+    drawCommitTimeGraphs(retArr,names)
     return retArr
 }
 
-let drawCommitTimeGraphs = function(theArr){
+let drawCommitTimeGraphs = function(theArr, names){
     let xArr = [...Array(168).keys()]
+    let labels = [...Array(theArr.length).keys()]
+    labels[0] = "<button onclick=\"console.log('redraw')\">Click me</button>"
     let traceArr = []
-    theArr.forEach(set => {
+    theArr.forEach((set,index) => {
         let trace = {
             x: xArr,
             y: set,
-            type: 'lines+markers'
+            mode:'marker+line',
+            type:'scatter',
+            marker:{size:6},
+            line:{shape:'hvh',width:2},
+            name: names[index].name
         }
         traceArr.push(trace)
     })
-    console.log(traceArr)
-    Plotly.newPlot('myDiv', traceArr);
+    let layout = {title:'Commits by day, time and repo.'};      
+    Plotly.newPlot('myDiv', traceArr, layout);
 }
+/*  <button onclick="console.log('redraw')">Click me</button>  */
 //***************************************************************
 //***************************************************************
 //***************************************************************
