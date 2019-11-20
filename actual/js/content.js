@@ -86,14 +86,13 @@ let simplifyCommitTimes = function(rawData, names){
         })
         retArr.push(tmpArr)
     })
-    drawCommitTimeGraphs(retArr,names)
+    // drawCommitTimeGraphs(retArr,names)
+    drawCommitTimeRibbon(retArr, names)
     return retArr
 }
 
 let drawCommitTimeGraphs = function(theArr, names){
     let xArr = buildTimes()
-    let labels = [...Array(theArr.length).keys()]
-    labels[0] = "<button onclick=\"console.log('redraw')\">Click me</button>"
     let traceArr = []
     theArr.forEach((set,index) => {
         let trace = {
@@ -101,8 +100,8 @@ let drawCommitTimeGraphs = function(theArr, names){
             y: set,
             mode:'marker+line',
             type:'scatter',
-            marker:{size:6},
-            line:{shape:'hvh',width:2},
+            marker:{size:12},
+            line:{shape:'linear',width:2},
             name: names[index].name
         }
         traceArr.push(trace)
@@ -110,7 +109,27 @@ let drawCommitTimeGraphs = function(theArr, names){
     let layout = {title:'Commits by day, time and repo.'};      
     Plotly.newPlot('myDiv', traceArr, layout);
 }
-/*  <button onclick="console.log('redraw')">Click me</button>  */
+
+let drawCommitTimeRibbon = function(theArr, names){
+    let actXList = genWidthArr(names.length)
+    let xArr = buildTimes()
+    let traceArr = []
+
+    theArr.forEach((set,index) => {
+        let anArr = new Array(168).fill(index)
+        // console.log(actXList[index])
+        let trace = {
+            z: dubArr(set),
+            x: genPairs(168),
+            y: actXList[index],
+            mode:'lines',
+            type:'surface'
+        }
+        traceArr.push(trace)
+    }) 
+    Plotly.newPlot('myDiv', traceArr);
+}
+ 
 //***************************************************************
 //***************************************************************
 //***************************************************************

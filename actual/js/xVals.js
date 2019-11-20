@@ -10,3 +10,24 @@ let buildTimes = function () {
     })
     return X_AXIS_VALS
 }
+
+let dubArr = function(arr){
+    let newArr = []
+    arr.forEach(item => {
+        newArr.push([item, item])
+    })
+    return newArr
+}
+
+let genWidthArr = function(strips){
+    let newArr = []
+    for(let i = 0, j = 2; i < strips; i++){
+        let tmpArr = new Array(168).fill([i, i+1])
+        newArr.push(tmpArr)
+    }
+    return newArr
+}
+
+let genPairs = function(length){
+    return dubArr([...Array(length).keys()])
+}
