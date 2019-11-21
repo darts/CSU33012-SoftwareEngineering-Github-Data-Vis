@@ -39,26 +39,55 @@ let genPairs = function (length) {
 
 let getTotalLocAndLocsByLang = function (rawLangStats) {
     let retObj = []
+    let langBreakList = []
     let total = 0
-    rawLangStats.forEach(e => {
-        for (var lang in e) {
-            total += e[lang]
-        }
-    })
-    return { total: total, byLang: retObj }
-}
-
-//obselete
-let getLocByLang = function (rawLangStats) {
-    let retObj = []
-    rawLangStats.forEach(e => {
-        for (var lang in e) {
+    rawLangStats.forEach((repo,index) => {
+        for (var lang in repo) {
+            total += repo[lang]
             if (!(retObj.hasOwnProperty(lang))) {
-                retObj[lang] = e[lang]
+                retObj[lang] = repo[lang]
             } else {
-                retObj[lang] += e[lang]
+                retObj[lang] += repo[lang]
+            }
+            if(!(langBreakList.hasOwnProperty(lang))){
+                langBreakList[lang] = [{repo:names[index], LOC:repo[lang]}]
+            }else{
+                langBreakList[lang].push({repo:names[index], LOC:repo[lang]})
             }
         }
     })
-    return retObj
+    return { total: total, byLang: retObj, langBreak: langBreakList }
 }
+
+
+// obselete
+// let getLangBreakdown = function(rawLangStats, names){
+//     let langBreakList = []
+//     rawLangStats.forEach((repo, index) => {
+//         for(var lang in repo){
+//             if(!(langBreakList.hasOwnProperty(lang))){
+//                 langBreakList[lang] = [{repo:names[index], LOC:repo[lang]}]
+//             }else{
+//                 langBreakList[lang].push({repo:names[index], LOC:repo[lang]})
+//             }
+//         }
+//     })
+//     return langBreakList
+// }
+
+
+
+//obselete
+// let getLocByLang = function (rawLangStats) {
+//     let retObj = []
+//     rawLangStats.forEach(e => {
+//         for (var lang in e) {
+//             if (!(retObj.hasOwnProperty(lang))) {
+//                 retObj[lang] = e[lang]
+//             } else {
+//                 retObj[lang] += e[lang]
+//             }
+//         }
+//     })
+//     return retObj
+// }
