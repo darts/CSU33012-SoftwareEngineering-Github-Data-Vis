@@ -1,3 +1,4 @@
+let env = {}
 let drawCommitTimeGraphs = function (theArr, names, divName) {
     document.getElementById(divName).innerHTML = ""
     let xArr = buildTimes()
