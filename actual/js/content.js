@@ -31,6 +31,7 @@ let getLangStats = function (result) {
     Promise.all(pAr).then(langs => {
         result = result.data.map(e => e.name)
         console.log({langStatsRaw:langs.map(e => e.data), repoNames:result})
+        getLocByLang(langs.map(e => e.data))
         drawLangPie(langs.map(e => e.data), result)
         return langs.map(e => e.data);
     })
@@ -48,7 +49,7 @@ let getCommuStats = function (result) {
     })
 
     Promise.all(pAr).then(comm => {
-        console.log(comm.map(e => e.data));
+        // console.log(comm.map(e => e.data));
         return comm.map(e => e.data);
     })
 }

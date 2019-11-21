@@ -45,5 +45,7 @@ let drawCommitTimeRibbon = function (theArr, names, divName) {
 }
 
 let drawLangPie = function(langStats, repoNames){
+    console.log({totalLOC:getTotalLocAndLocsByLang(langStats)})
+
     return
 }
