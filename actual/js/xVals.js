@@ -35,8 +35,3 @@ let genWidthArr = function(strips){
 let genPairs = function(length){
     return dubArr([...Array(length).keys()])
 }
-
-//takes an array of length 168 and splits it into 7
-let splitVals = function(arrayLen168){
-
-}
