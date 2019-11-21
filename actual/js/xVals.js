@@ -59,21 +59,25 @@ let getTotalLocAndLocsByLang = function (rawLangStats, names) {
 }
 
 let genLabels = function(splitData){
+    let ids = ["Total"]
     let labels = ["Total"]
     let parents = [""]
     let values = [splitData.total]
     for(var lang in splitData.byLang){
         labels.push(lang)
+        parents.push("Total")
+        ids.push(lang)
         values.push(splitData.byLang[lang])
         splitData.langBreak[lang].forEach(e => {
             labels.push(e.repo)
             parents.push(lang)
             values.push(e.LOC)
+            ids.push(String(lang) + String(e.repo))
         })
-        parents.push("Total")
+        
     }
-    console.log({labels:labels, parents:parents, values:values})
-
+    console.log({labels:labels, parents:parents, values:values, ids:ids})
+    return {labels:labels, parents:parents, values:values, ids:ids}
 }
 
 

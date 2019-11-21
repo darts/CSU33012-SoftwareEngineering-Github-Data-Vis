@@ -46,13 +46,18 @@ let drawCommitTimeRibbon = function (theArr, names, divName) {
 
 let drawLangPie = function (langStats, repoNames) {
     // console.log({ totalLOC: getTotalLocAndLocsByLang(langStats, repoNames.data.map(a => a.name)) })
-    genLabels(getTotalLocAndLocsByLang(langStats, repoNames.data.map(a => a.name)))
+    let labels = genLabels(getTotalLocAndLocsByLang(langStats, repoNames.data.map(a => a.name)))
+    console.log(labels.ids)
+    console.log(labels.labels)
+    console.log(labels.parents)
+    console.log(labels.values)
     var data = [
         {
             "type": "sunburst",
-            "labels": ["Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"],
-            "parents": ["", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve"],
-            "values": [65, 14, 12, 10, 2, 6, 6, 4, 4],
+            "ids": labels.ids,
+            "labels": labels.labels,
+            "parents": labels.parents,
+            "values": labels.values,
             "leaf": { "opacity": 0.4 },
             "marker": { "line": { "width": 2 } },
             "branchvalues": 'total'
