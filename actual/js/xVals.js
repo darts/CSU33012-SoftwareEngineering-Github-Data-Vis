@@ -36,7 +36,6 @@ let genPairs = function (length) {
     return dubArr([...Array(length).keys()])
 }
 
-
 let getTotalLocAndLocsByLang = function (rawLangStats, names) {
     let retObj = []
     let langBreakList = []
@@ -57,6 +56,24 @@ let getTotalLocAndLocsByLang = function (rawLangStats, names) {
         }
     })
     return { total: total, byLang: retObj, langBreak: langBreakList }
+}
+
+let genLabels = function(splitData){
+    let labels = ["Total"]
+    let parents = [""]
+    let values = [splitData.total]
+    for(var lang in splitData.byLang){
+        labels.push(lang)
+        values.push(splitData.byLang[lang])
+        splitData.langBreak[lang].forEach(e => {
+            labels.push(e.repo)
+            parents.push(lang)
+            values.push(e.LOC)
+        })
+        parents.push("Total")
+    }
+    console.log({labels:labels, parents:parents, values:values})
+
 }
 
 
