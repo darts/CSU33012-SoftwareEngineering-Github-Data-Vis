@@ -1,4 +1,4 @@
-let days = ["Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat ", "Sun "]
+let days = ["Sun ", "Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat "]
 let buildTimesOld = function () {
     let hours = [...Array(24).keys()]
     let X_AXIS_VALS = []

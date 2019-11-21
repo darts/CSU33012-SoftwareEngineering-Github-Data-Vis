@@ -71,6 +71,8 @@ let launcher = function (usrName) {
     usrPromise.then(function (result) {
         getPunchAbility(result); // get punch cards 
 
+        // getUserStats(input); //get a user's stats
+
         // getLangStats(result); // get languages
 
         // getCommuStats(result); // currently not useable
@@ -80,21 +82,10 @@ let launcher = function (usrName) {
 }
 
 let simplifyCommitTimes = function (rawData, names) {
-    // console.log(rawData)
-    // let retArr = []
-    // rawData.forEach(repoData => {
-    //     tmpArr = []
-    //     repoData.forEach(aTime => {
-    //         tmpArr.push(aTime[2])
-    //     })
-    //     retArr.push(tmpArr)
-    // })
-
-
     let combArr = new Array(7).fill(0)
     // console.log({arr:combArr, dl:rawData[0].length})
     combArr.forEach((elem, index) => {combArr[index] = new Array(24).fill(0)})
-    console.log({array:combArr, expected: new Array(24).fill(0)})
+    // console.log({array:combArr, expected: new Array(24).fill(0)})
     rawData.forEach(repo => {
         repo.forEach(slice => {
             combArr[slice[0]][slice[1]] += slice[2]
@@ -104,45 +95,6 @@ let simplifyCommitTimes = function (rawData, names) {
     // drawCommitTimeRibbon(combArr, names)
     drawCommitTimeGraphs(combArr, days, 'myDiv')
     return combArr
-}
-
-let drawCommitTimeGraphs = function (theArr, names, divName) {
-    let xArr = buildTimes()
-    let traceArr = []
-    theArr.forEach((set, index) => {
-        let trace = {
-            x: xArr,
-            y: set,
-            mode: 'marker+line',
-            type: 'scatter',
-            marker: { size: 12 },
-            line: { shape: 'linear', width: 2 },
-            name: names[index]
-        }
-        traceArr.push(trace)
-    })
-    let layout = { title: 'Commits by day and time' };
-    Plotly.newPlot(divName, traceArr, layout);
-}
-
-let drawCommitTimeRibbon = function (theArr, names) {
-    let actXList = genWidthArr(names.length)
-    let xArr = buildTimes()
-    let traceArr = []
-
-    theArr.forEach((set, index) => {
-        let anArr = new Array(168).fill(index)
-        // console.log(actXList[index])
-        let trace = {
-            z: dubArr(set),
-            x: genPairs(168),
-            y: actXList[index],
-            mode: 'lines',
-            type: 'surface'
-        }
-        traceArr.push(trace)
-    })
-    Plotly.newPlot('myDiv', traceArr);
 }
 
 
@@ -163,8 +115,6 @@ if (typeof(AUTH_TOKEN) != undefined) {
         userAgent: 'myApp v1.2.3'
     });
 }
-
-getUserStats(input);
 launcher(input);
 
 //TODO Add dynamic language graph with total LOC in centre, languages split by repos (on hover) on outside
