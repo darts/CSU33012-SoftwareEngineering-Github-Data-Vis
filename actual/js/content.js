@@ -73,7 +73,7 @@ let launcher = function (usrName) {
 
         // getUserStats(input); //get a user's stats
 
-        // getLangStats(result); // get languages
+        getLangStats(result); // get languages
 
         // getCommuStats(result); // currently not useable
     }, function (err) {
