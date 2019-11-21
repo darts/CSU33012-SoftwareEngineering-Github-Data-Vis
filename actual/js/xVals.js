@@ -76,10 +76,16 @@ let genLabels = function(splitData){
         })
         
     }
-    console.log({labels:labels, parents:parents, values:values, ids:ids})
+    // console.log({labels:labels, parents:parents, values:values, ids:ids})
     return {labels:labels, parents:parents, values:values, ids:ids}
 }
 
+let calcChurn = function(dataResponse, names, userName){
+    dataResponse.forEach(resp => {
+
+    })
+    return dataResponse
+}
 
 // obselete
 // let getLangBreakdown = function(rawLangStats, names){
