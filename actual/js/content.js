@@ -104,9 +104,9 @@ let simplifyCommitTimes = function (rawData, names) {
 
 let input = window.prompt("Pick a user:", "darts");
 let octokit;
-if (typeof(AUTH_TOKEN) != undefined) {
+if (env.AUTH_TOKEN !== undefined) {
     octokit = Octokit({
-        auth: AUTH_TOKEN,
+        auth: env.AUTH_TOKEN,
         userAgent: 'myApp v1.2.3'
     });
 } else {
