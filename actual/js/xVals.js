@@ -37,7 +37,7 @@ let genPairs = function (length) {
 }
 
 
-let getTotalLocAndLocsByLang = function (rawLangStats) {
+let getTotalLocAndLocsByLang = function (rawLangStats, names) {
     let retObj = []
     let langBreakList = []
     let total = 0
