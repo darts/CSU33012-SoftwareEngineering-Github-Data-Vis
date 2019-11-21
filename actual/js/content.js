@@ -1,3 +1,5 @@
+let cachedGraphData;
+
 //returns an array of (an array of time values for commits)
 let getPunchAbility = function (result) {
     let pAr = [];
@@ -78,20 +80,33 @@ let launcher = function (usrName) {
 }
 
 let simplifyCommitTimes = function (rawData, names) {
-    let retArr = []
-    rawData.forEach(repoData => {
-        tmpArr = []
-        repoData.forEach(aTime => {
-            tmpArr.push(aTime[2])
+    // console.log(rawData)
+    // let retArr = []
+    // rawData.forEach(repoData => {
+    //     tmpArr = []
+    //     repoData.forEach(aTime => {
+    //         tmpArr.push(aTime[2])
+    //     })
+    //     retArr.push(tmpArr)
+    // })
+
+
+    let combArr = new Array(7).fill(0)
+    // console.log({arr:combArr, dl:rawData[0].length})
+    combArr.forEach((elem, index) => {combArr[index] = new Array(24).fill(0)})
+    console.log({array:combArr, expected: new Array(24).fill(0)})
+    rawData.forEach(repo => {
+        repo.forEach(slice => {
+            combArr[slice[0]][slice[1]] += slice[2]
         })
-        retArr.push(tmpArr)
     })
-    // drawCommitTimeGraphs(retArr,names)
-    drawCommitTimeRibbon(retArr, names)
-    return retArr
+    cachedGraphData = {ribbon: {combArr:combArr, names:names}, line: {combArr:combArr, days:days, div:'myDiv'}}
+    // drawCommitTimeRibbon(combArr, names)
+    drawCommitTimeGraphs(combArr, days, 'myDiv')
+    return combArr
 }
 
-let drawCommitTimeGraphs = function (theArr, names) {
+let drawCommitTimeGraphs = function (theArr, names, divName) {
     let xArr = buildTimes()
     let traceArr = []
     theArr.forEach((set, index) => {
@@ -102,12 +117,12 @@ let drawCommitTimeGraphs = function (theArr, names) {
             type: 'scatter',
             marker: { size: 12 },
             line: { shape: 'linear', width: 2 },
-            name: names[index].name
+            name: names[index]
         }
         traceArr.push(trace)
     })
-    let layout = { title: 'Commits by day, time and repo.' };
-    Plotly.newPlot('myDiv', traceArr, layout);
+    let layout = { title: 'Commits by day and time' };
+    Plotly.newPlot(divName, traceArr, layout);
 }
 
 let drawCommitTimeRibbon = function (theArr, names) {
@@ -130,20 +145,21 @@ let drawCommitTimeRibbon = function (theArr, names) {
     Plotly.newPlot('myDiv', traceArr);
 }
 
+
 //***************************************************************
 //***************************************************************
 //***************************************************************
 
 let input = window.prompt("Pick a user:", "darts");
-
-if (AUTH_TOKEN) {
-    const octokit = Octokit({
+let octokit;
+if (typeof(AUTH_TOKEN) != undefined) {
+    octokit = Octokit({
         auth: AUTH_TOKEN,
         userAgent: 'myApp v1.2.3'
     });
 } else {
     console.log("No Access Token Found! \n Rates will be limited.")
-    const octokit = Octokit({
+    octokit = Octokit({
         userAgent: 'myApp v1.2.3'
     });
 }
@@ -151,7 +167,6 @@ if (AUTH_TOKEN) {
 getUserStats(input);
 launcher(input);
 
-//TODO Convert graph to show commits where each day is 1 strip
 //TODO Add dynamic language graph with total LOC in centre, languages split by repos (on hover) on outside
 //TODO Some user graph showing followers and their followers as bubbles
 //TODO Update to allow functioning without key

@@ -1,5 +1,5 @@
-let buildTimes = function () {
-    let days = ["Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat ", "Sun "]
+let days = ["Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat ", "Sun "]
+let buildTimesOld = function () {
     let hours = [...Array(24).keys()]
     let X_AXIS_VALS = []
 
@@ -9,6 +9,10 @@ let buildTimes = function () {
         })
     })
     return X_AXIS_VALS
+}
+
+let buildTimes = function () {
+    return X_AXIS_VALS = [...Array(24).keys()]
 }
 
 let dubArr = function(arr){
@@ -30,4 +34,9 @@ let genWidthArr = function(strips){
 
 let genPairs = function(length){
     return dubArr([...Array(length).keys()])
+}
+
+//takes an array of length 168 and splits it into 7
+let splitVals = function(arrayLen168){
+
 }
