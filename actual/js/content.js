@@ -144,5 +144,10 @@ const octokit = Octokit({
 getUserStats(input);
 launcher(input);
 
+//TODO Convert graph to show commits where each day is 1 strip
+//TODO Add dynamic language graph with total LOC in centre, languages split by repos (on hover) on outside
+//TODO Some user graph showing followers and their followers as bubbles
+//TODO Update to allow functioning without key
+//TODO Add some ability to graph comments per repo, bar chart (3d based on time?)
 
 //[...Array(N).keys()]
