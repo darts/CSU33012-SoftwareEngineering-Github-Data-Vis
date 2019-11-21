@@ -42,7 +42,3 @@ let drawCommitTimeRibbon = function (theArr, names, divName) {
     let layout = { showlegend: false, title: 'Commits by day and time', scene:{xaxis:{title: "Time of day (24hr)"}, yaxis:{title: "Day of the week (Sun - Sat)"}, zaxis:{title: "Number of commits"}} };
     Plotly.newPlot(divName, traceArr, layout);
 }
-
-let drawLangPie = function(langStats, repoNames){
-    return
-}

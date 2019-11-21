@@ -29,8 +29,6 @@ let getLangStats = function (result) {
     })
 
     Promise.all(pAr).then(langs => {
-        console.log({langStatsRaw:langs.map(e => e.data), repoNames:result.data.map(e => e.name)})
-        drawLangPie(langs.map(e => e.data), result.map(e => e.name))
         return langs.map(e => e.data);
     })
 }
@@ -71,11 +69,11 @@ let launcher = function (usrName) {
     })
 
     usrPromise.then(function (result) {
-        // getPunchAbility(result); // get punch cards 
+        getPunchAbility(result); // get punch cards 
 
         // getUserStats(input); //get a user's stats
 
-        getLangStats(result); // get languages
+        // getLangStats(result); // get languages
 
         // getCommuStats(result); // currently not useable
     }, function (err) {
