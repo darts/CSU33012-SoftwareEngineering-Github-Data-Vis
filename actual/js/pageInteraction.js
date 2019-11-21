@@ -23,7 +23,7 @@ let seek = function(thingsToUnHide){
 let graphState = false
 let switchCommitTimeGraph = function() {
     if(!graphState){
-        drawCommitTimeRibbon(cachedGraphData.ribbon.combArr, cachedGraphData.ribbon.names)
+        drawCommitTimeRibbon(cachedGraphData.ribbon.combArr, cachedGraphData.ribbon.names, cachedGraphData.ribbon.div)
     }else{
         drawCommitTimeGraphs(cachedGraphData.line.combArr, cachedGraphData.line.days, cachedGraphData.line.div)
     }

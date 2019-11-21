@@ -91,7 +91,7 @@ let simplifyCommitTimes = function (rawData, names) {
             combArr[slice[0]][slice[1]] += slice[2]
         })
     })
-    cachedGraphData = {ribbon: {combArr:combArr, names:names}, line: {combArr:combArr, days:days, div:'myDiv'}}
+    cachedGraphData = {ribbon: {combArr:combArr, names:names, div:'myDiv'}, line: {combArr:combArr, days:days, div:'myDiv'}}
     // drawCommitTimeRibbon(combArr, names)
     drawCommitTimeGraphs(combArr, days, 'myDiv')
     return combArr
