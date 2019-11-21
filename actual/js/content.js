@@ -1,12 +1,12 @@
 //returns an array of (an array of time values for commits)
-let getPunchAbility = function(result){
+let getPunchAbility = function (result) {
     let pAr = [];
     result.data.forEach(e => {
         pAr.push(
             octokit.repos.getPunchCardStats({
-            owner: input,
-            repo: e.name
-        }))
+                owner: input,
+                repo: e.name
+            }))
     });
     Promise.all(pAr).then(repos => {
         simplifyCommitTimes(repos.map(e => e.data), result.data)
@@ -17,7 +17,7 @@ let getPunchAbility = function(result){
 // ********************
 // Get lang stats
 // returns an array of objects containing languages
-let getLangStats = function(result){
+let getLangStats = function (result) {
     let pAr = [];
     result.data.forEach(e => {
         pAr.push(octokit.repos.listLanguages({
@@ -33,7 +33,7 @@ let getLangStats = function(result){
 
 // ********************
 // get community metrics (inactive api)
-let getCommuStats = function(result){
+let getCommuStats = function (result) {
     let pAr = [];
     result.data.forEach(e => {
         pAr.push(octokit.repos.retrieveCommunityProfileMetrics({
@@ -50,7 +50,7 @@ let getCommuStats = function(result){
 
 // ********************
 // get generic user data
-let getUserStats = function(usrName){
+let getUserStats = function (usrName) {
     let thePromise = octokit.users.getByUsername({ username: usrName });
     thePromise.then(function (result) {
         console.log(result); // "Stuff worked!"
@@ -61,7 +61,7 @@ let getUserStats = function(usrName){
 
 // ********************
 // get commit data and fire off the rest
-let launcher = function(usrName){
+let launcher = function (usrName) {
     let usrPromise = octokit.repos.listForUser({
         username: usrName
     })
@@ -70,14 +70,14 @@ let launcher = function(usrName){
         getPunchAbility(result); // get punch cards 
 
         // getLangStats(result); // get languages
-        
+
         // getCommuStats(result); // currently not useable
     }, function (err) {
         console.log(err);
     })
 }
 
-let simplifyCommitTimes = function(rawData, names){
+let simplifyCommitTimes = function (rawData, names) {
     let retArr = []
     rawData.forEach(repoData => {
         tmpArr = []
@@ -91,55 +91,62 @@ let simplifyCommitTimes = function(rawData, names){
     return retArr
 }
 
-let drawCommitTimeGraphs = function(theArr, names){
+let drawCommitTimeGraphs = function (theArr, names) {
     let xArr = buildTimes()
     let traceArr = []
-    theArr.forEach((set,index) => {
+    theArr.forEach((set, index) => {
         let trace = {
             x: xArr,
             y: set,
-            mode:'marker+line',
-            type:'scatter',
-            marker:{size:12},
-            line:{shape:'linear',width:2},
+            mode: 'marker+line',
+            type: 'scatter',
+            marker: { size: 12 },
+            line: { shape: 'linear', width: 2 },
             name: names[index].name
         }
         traceArr.push(trace)
     })
-    let layout = {title:'Commits by day, time and repo.'};      
+    let layout = { title: 'Commits by day, time and repo.' };
     Plotly.newPlot('myDiv', traceArr, layout);
 }
 
-let drawCommitTimeRibbon = function(theArr, names){
+let drawCommitTimeRibbon = function (theArr, names) {
     let actXList = genWidthArr(names.length)
     let xArr = buildTimes()
     let traceArr = []
 
-    theArr.forEach((set,index) => {
+    theArr.forEach((set, index) => {
         let anArr = new Array(168).fill(index)
         // console.log(actXList[index])
         let trace = {
             z: dubArr(set),
             x: genPairs(168),
             y: actXList[index],
-            mode:'lines',
-            type:'surface'
+            mode: 'lines',
+            type: 'surface'
         }
         traceArr.push(trace)
-    }) 
+    })
     Plotly.newPlot('myDiv', traceArr);
 }
- 
+
 //***************************************************************
 //***************************************************************
 //***************************************************************
 
 let input = window.prompt("Pick a user:", "darts");
 
-const octokit = Octokit({
-    auth: AUTH_TOKEN,
-    userAgent: 'myApp v1.2.3'
-});
+if (AUTH_TOKEN) {
+    const octokit = Octokit({
+        auth: AUTH_TOKEN,
+        userAgent: 'myApp v1.2.3'
+    });
+} else {
+    console.log("No Access Token Found! \n Rates will be limited.")
+    const octokit = Octokit({
+        userAgent: 'myApp v1.2.3'
+    });
+}
 
 getUserStats(input);
 launcher(input);
