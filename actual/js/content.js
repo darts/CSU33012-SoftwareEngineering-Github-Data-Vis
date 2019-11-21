@@ -74,7 +74,7 @@ let launcher = function (usrName) {
     })
 
     usrPromise.then(function (result) {
-        // getPunchAbility(result); // get punch cards 
+        getPunchAbility(result); // get punch cards 
 
         // getUserStats(input); //get a user's stats
 
