@@ -15,7 +15,7 @@ let drawCommitTimeGraphs = function (theArr, names, divName) {
         }
         traceArr.push(trace)
     })
-    let layout = {title: 'Commits by day and time', xaxis:{title: "Time of day (24hr)"}, yaxis:{title: "Number of commits"} };
+    let layout = { title: 'Commits by day and time', xaxis: { title: "Time of day (24hr)" }, yaxis: { title: "Number of commits" } };
     Plotly.newPlot(divName, traceArr, layout);
 }
 
@@ -40,6 +40,35 @@ let drawCommitTimeRibbon = function (theArr, names, divName) {
         }
         traceArr.push(trace)
     })
-    let layout = { showlegend: false, title: 'Commits by day and time', scene:{xaxis:{title: "Time of day (24hr)"}, yaxis:{title: "Day of the week (Sun - Sat)"}, zaxis:{title: "Number of commits"}} };
+    let layout = { showlegend: false, title: 'Commits by day and time', scene: { xaxis: { title: "Time of day (24hr)" }, yaxis: { title: "Day of the week (Sun - Sat)" }, zaxis: { title: "Number of commits" } } };
     Plotly.newPlot(divName, traceArr, layout);
+}
+
+let drawLangPie = function (langStats, repoNames) {
+    // console.log({ totalLOC: getTotalLocAndLocsByLang(langStats, repoNames.data.map(a => a.name)) })
+    let labels = genLabels(getTotalLocAndLocsByLang(langStats, repoNames.data.map(a => a.name)))
+    console.log(labels.ids)
+    console.log(labels.labels)
+    console.log(labels.parents)
+    console.log(labels.values)
+    var data = [
+        {
+            "type": "sunburst",
+            "ids": labels.ids,
+            "labels": labels.labels,
+            "parents": labels.parents,
+            "values": labels.values,
+            "leaf": { "opacity": 0.4 },
+            "marker": { "line": { "width": 2 } },
+            "branchvalues": 'total'
+        }];
+
+    var layout = {
+        "margin": { "l": 0, "r": 0, "b": 0, "t": 0 },
+    };
+
+
+    Plotly.newPlot('myDiv2d', data, layout)
+
+    return
 }

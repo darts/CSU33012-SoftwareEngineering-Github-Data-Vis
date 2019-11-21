@@ -5,7 +5,7 @@ let buildTimesOld = function () {
 
     days.forEach(day => {
         hours.forEach(hour => {
-            X_AXIS_VALS.push((day + "@ "+ String(hour)))
+            X_AXIS_VALS.push((day + "@ " + String(hour)))
         })
     })
     return X_AXIS_VALS
@@ -15,7 +15,7 @@ let buildTimes = function () {
     return X_AXIS_VALS = [...Array(24).keys()]
 }
 
-let dubArr = function(arr){
+let dubArr = function (arr) {
     let newArr = []
     arr.forEach(item => {
         newArr.push([item, item])
@@ -23,20 +23,92 @@ let dubArr = function(arr){
     return newArr
 }
 
-let genWidthArr = function(strips){
+let genWidthArr = function (strips) {
     let newArr = []
-    for(let i = 0, j = 2; i < strips; i++){
-        let tmpArr = new Array(168).fill([i, i+0.5])
+    for (let i = 0, j = 2; i < strips; i++) {
+        let tmpArr = new Array(168).fill([i, i + 0.5])
         newArr.push(tmpArr)
     }
     return newArr
 }
 
-let genPairs = function(length){
+let genPairs = function (length) {
     return dubArr([...Array(length).keys()])
 }
 
-//takes an array of length 168 and splits it into 7
-let splitVals = function(arrayLen168){
-
+let getTotalLocAndLocsByLang = function (rawLangStats, names) {
+    let retObj = []
+    let langBreakList = []
+    let total = 0
+    rawLangStats.forEach((repo,index) => {
+        for (var lang in repo) {
+            total += repo[lang]
+            if (!(retObj.hasOwnProperty(lang))) {
+                retObj[lang] = repo[lang]
+            } else {
+                retObj[lang] += repo[lang]
+            }
+            if(!(langBreakList.hasOwnProperty(lang))){
+                langBreakList[lang] = [{repo:names[index], LOC:repo[lang]}]
+            }else{
+                langBreakList[lang].push({repo:names[index], LOC:repo[lang]})
+            }
+        }
+    })
+    return { total: total, byLang: retObj, langBreak: langBreakList }
 }
+
+let genLabels = function(splitData){
+    let ids = ["Total"]
+    let labels = ["Total"]
+    let parents = [""]
+    let values = [splitData.total]
+    for(var lang in splitData.byLang){
+        labels.push(lang)
+        parents.push("Total")
+        ids.push(lang)
+        values.push(splitData.byLang[lang])
+        splitData.langBreak[lang].forEach(e => {
+            labels.push(e.repo)
+            parents.push(lang)
+            values.push(e.LOC)
+            ids.push(String(lang) + String(e.repo))
+        })
+        
+    }
+    console.log({labels:labels, parents:parents, values:values, ids:ids})
+    return {labels:labels, parents:parents, values:values, ids:ids}
+}
+
+
+// obselete
+// let getLangBreakdown = function(rawLangStats, names){
+//     let langBreakList = []
+//     rawLangStats.forEach((repo, index) => {
+//         for(var lang in repo){
+//             if(!(langBreakList.hasOwnProperty(lang))){
+//                 langBreakList[lang] = [{repo:names[index], LOC:repo[lang]}]
+//             }else{
+//                 langBreakList[lang].push({repo:names[index], LOC:repo[lang]})
+//             }
+//         }
+//     })
+//     return langBreakList
+// }
+
+
+
+//obselete
+// let getLocByLang = function (rawLangStats) {
+//     let retObj = []
+//     rawLangStats.forEach(e => {
+//         for (var lang in e) {
+//             if (!(retObj.hasOwnProperty(lang))) {
+//                 retObj[lang] = e[lang]
+//             } else {
+//                 retObj[lang] += e[lang]
+//             }
+//         }
+//     })
+//     return retObj
+// }
