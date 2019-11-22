@@ -109,13 +109,9 @@ let getCommitAmounts = function (repos) {
         }))
     })
     Promise.all(pAr).then(e => {
-        // console.log(calcChurn(e.map(a => a.data), repos.data.map(a => a.name), input))
-        console.log(preParseChurnNames(e.map(a => a.data), repos.data.map(a => a.name), input))
-        // console.log(e.map(a => a.data))
+        preParsedValues = preParseChurnNames(e.map(a => a.data), repos.data.map(a => a.name), input)
+        fillScrollBarRepoNames(repos.data.map(a => a.name))
     })
-    // Promise.all(pAr).then(resp => {
-    //     resp.map(elem => elem
-    // })
 }
 
 //***************************************************************

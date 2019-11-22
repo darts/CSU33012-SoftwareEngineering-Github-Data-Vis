@@ -63,3 +63,11 @@ let drawLangPie = function (langStats, repoNames) {
     };
     Plotly.newPlot('myDiv2d', data, layout)
 }
+
+let drawBarChartsShort = function(repoName){
+    drawBarCharts(repoName, fillScrollBarDates(repoName))
+}
+
+let drawBarCharts = function(repoName, endDate){
+    console.log({repoName: repoName, endDate:endDate});
+}

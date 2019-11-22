@@ -1,4 +1,7 @@
 let days = ["Sun ", "Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat "]
+let preParsedValues;
+let curDate;
+
 let buildTimesOld = function () {
     let hours = [...Array(24).keys()]
     let X_AXIS_VALS = []
@@ -114,4 +117,18 @@ let preParseChurnNames = function(data, repoNames, authorName){
         i+=1
     })
     return resultObj;
+}
+
+let fillScrollBarRepoNames = function(names){
+    names.forEach(name => {
+        document.getElementById("dropdownRepo").innerHTML += `<option onclick="drawBarChartsShort('${name}')">${name}</option>`
+    })
+    fillScrollBarDates(names[0])
+}
+
+let fillScrollBarDates = function(name){
+    preParsedValues[name].map(e => e.w).map(e => new Date(e*1000)).map(e => e.toDateString()).forEach(date => {
+        document.getElementById("dropdownDate").innerHTML += `<option onclick="updateDateRepo('${date}')">${date}</option>`
+    })
+    return new Date(preParsedValues[name][0].w*1000).toDateString()
 }
