@@ -155,7 +155,6 @@ let fillScrollBarDates = function(name){
 //      - yd -> where yd is an array of the deletions (in loc)
 let cachedWeeks = {repo:"", data:[]} //this is where we cache data to avoid lots of calculations
 let getValsStartingAt = function(repoName, repo, date){
-    console.log({repo:repo, date:date})
     let unixWeek = 60*60*24*7 //(60 sec) * (60 min) * (24 hr) * (7 days)
     let dateList = [date]
     let addList = []
