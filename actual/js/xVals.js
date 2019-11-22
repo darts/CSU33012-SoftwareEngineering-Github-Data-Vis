@@ -123,12 +123,17 @@ let fillScrollBarRepoNames = function(names){
     names.forEach(name => {
         document.getElementById("dropdownRepo").innerHTML += `<option onclick="drawBarChartsShort('${name}')">${name}</option>`
     })
-    fillScrollBarDates(names[0])
+    drawBarCharts(names[0], fillScrollBarDates(names[0]))
 }
 
 let fillScrollBarDates = function(name){
     preParsedValues[name].map(e => e.w).map(e => new Date(e*1000)).map(e => e.toDateString()).forEach(date => {
-        document.getElementById("dropdownDate").innerHTML += `<option onclick="updateDateRepo('${date}')">${date}</option>`
+        document.getElementById("dropdownDate").innerHTML = `<option onclick="updateDateRepo('${date}')">${date}</option>` + document.getElementById("dropdownDate").innerHTML
     })
-    return new Date(preParsedValues[name][0].w*1000).toDateString()
+    console.log(preParsedValues[name][preParsedValues[name].length-1])
+    return new Date(preParsedValues[name][preParsedValues[name].length-1].w*1000).toDateString()
+}
+
+let getValsStartingAt = function(repo, date){
+
 }
