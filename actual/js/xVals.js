@@ -119,6 +119,17 @@ let preParseChurnNames = function(data, repoNames, authorName){
     return resultObj;
 }
 
+let convertWeeksToObj = function(weeks){
+    let retObj = {};
+    weeks.forEach(e => {
+        retObj[e.w]={a:e.a, d:e.d}
+    })
+    return retObj
+}
+
+// adds the names of all the repos to the dropdown menu 
+// then draws the bar chart with the first repo
+// names is an array of repo names
 let fillScrollBarRepoNames = function(names){
     names.forEach(name => {
         document.getElementById("dropdownRepo").innerHTML += `<option onclick="drawBarChartsShort('${name}')">${name}</option>`
@@ -126,14 +137,46 @@ let fillScrollBarRepoNames = function(names){
     drawBarCharts(names[0], fillScrollBarDates(names[0]))
 }
 
+// adds all the dates of a repo to the dropdown menu
+// name is the name of the repo who's dates are being added
 let fillScrollBarDates = function(name){
+    document.getElementById("dropdownDate").innerHTML = ""
     preParsedValues[name].map(e => e.w).map(e => new Date(e*1000)).map(e => e.toDateString()).forEach(date => {
-        document.getElementById("dropdownDate").innerHTML = `<option onclick="updateDateRepo('${date}')">${date}</option>` + document.getElementById("dropdownDate").innerHTML
+        document.getElementById("dropdownDate").innerHTML = `<option onclick="drawBarCharts('${name}','${date}')">${date}</option>` + document.getElementById("dropdownDate").innerHTML
     })
-    console.log(preParsedValues[name][preParsedValues[name].length-1])
     return new Date(preParsedValues[name][preParsedValues[name].length-1].w*1000).toDateString()
 }
 
-let getValsStartingAt = function(repo, date){
+// takes an obj 'repo' -> an array of additions and deletions of the repo
+// takes a number 'date' -> the UNIX timestamp of the last week 
+// returns an object containing:
+//      - x  -> where x is an array of human-readable dates
+//      - ya -> where ya is an array of the additions (in loc)
+//      - yd -> where yd is an array of the deletions (in loc)
+let cachedWeeks = {repo:"", data:[]} //this is where we cache data to avoid lots of calculations
+let getValsStartingAt = function(repoName, repo, date){
+    console.log({repo:repo, date:date})
+    let unixWeek = 60*60*24*7 //(60 sec) * (60 min) * (24 hr) * (7 days)
+    let dateList = [date]
+    let addList = []
+    let delList = []
+    for(i =0; i < 23; i+=1){ //add all the dates to the array (2 years)
+        dateList.unshift((date -= unixWeek))
+    }
 
+    if(!(cachedWeeks.repo === repoName)){
+        cachedWeeks.data = convertWeeksToObj(repo)
+        cachedWeeks.repo = repoName
+    }
+    dateList.forEach(date => {
+        if(cachedWeeks.data[date] !== undefined){
+            addList.push(cachedWeeks.data[date].a)
+            delList.push(cachedWeeks.data[date].d)
+        }else{
+            console.error(`cannot get data for week ${new Date(date*1000).toDateString()}, padding with 0s`)
+            addList.push(0)
+            delList.push(0)
+        }
+    })
+    return {dates:dateList.map(e => new Date(e*1000).toDateString()), addList:addList, delList:delList}
 }

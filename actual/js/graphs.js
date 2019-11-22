@@ -69,14 +69,16 @@ let drawBarChartsShort = function(repoName){
 }
 
 let drawBarCharts = function(repoName, endDate){
-    console.log({repoName: repoName, endDate:endDate});
-    console.log({preParsedValues:preParsedValues[repoName], time: new Date(endDate).getTime()/1000})
+    // console.log({repoName: repoName, endDate:endDate});
+    // console.log({preParsedValues:preParsedValues[repoName], time: new Date(endDate).getTime()/1000})
+    let a = getValsStartingAt(repoName,preParsedValues[repoName], new Date(endDate).getTime()/1000)
+    console.log(a);
 
     var trace1 = {
-        x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        y: [20, 14, 25, 16, 18, 22, 19, 15, 12, 16, 14, 17],
+        x: a.dates,
+        y: a.addList,
         type: 'bar',
-        name: 'Primary Product',
+        name: 'Additions',
         marker: {
           color: 'rgb(49,130,189)',
           opacity: 0.7,
@@ -84,10 +86,10 @@ let drawBarCharts = function(repoName, endDate){
       };
       
       var trace2 = {
-        x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        y: [19, 14, 22, 14, 16, 19, 15, 14, 10, 12, 12, 16],
+        x: a.dates,
+        y: a.delList,
         type: 'bar',
-        name: 'Secondary Product',
+        name: 'Deletions',
         marker: {
           color: 'rgb(204,204,204)',
           opacity: 0.5
