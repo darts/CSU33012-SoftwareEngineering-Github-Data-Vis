@@ -111,7 +111,7 @@ let getCommitAmounts = function (repos) {
             repo: repo.name
         }))
     })
-    Promise.all(pAr).then(e =>{
+    Promise.all(pAr).then(e => {
         console.log(calcChurn(e.map(a => a.data), repos.data.map(a => a.name), input))
         // console.log(e.map(a => a.data))
     })
@@ -125,19 +125,23 @@ let getCommitAmounts = function (repos) {
 //***************************************************************
 
 let input = window.prompt("Pick a user:", "darts");
-let octokit;
-if (env.AUTH_TOKEN !== undefined) {
-    octokit = Octokit({
-        auth: env.AUTH_TOKEN,
-        userAgent: 'myApp v1.2.3'
-    });
-} else {
-    console.log("No Access Token Found! \n Rates will be limited.")
-    octokit = Octokit({
-        userAgent: 'myApp v1.2.3'
-    });
+if (input === null)
+    window.location.reload(false)
+else {
+    let octokit;
+    if (env.AUTH_TOKEN !== undefined) {
+        octokit = Octokit({
+            auth: env.AUTH_TOKEN,
+            userAgent: 'myApp v1.2.3'
+        });
+    } else {
+        console.log("No Access Token Found! \n Rates will be limited.")
+        octokit = Octokit({
+            userAgent: 'myApp v1.2.3'
+        });
+    }
+    launcher(input);
 }
-launcher(input);
 
 //TODO Some user graph showing followers and their followers as bubbles
 //TODO Add some ability to graph comments per repo, bar chart (3d based on time?)

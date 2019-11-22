@@ -81,10 +81,23 @@ let genLabels = function(splitData){
 }
 
 let calcChurn = function(dataResponse, names, userName){
+    //change this so a week can be selected in a dropdown as an end date
+    let addArr = []
+    let delArr = []
+    let dateArr = []
     dataResponse.forEach(resp => {
-
+        resp.forEach(resUser => {
+            if(resUser.author.login === userName){
+                let tmp = resUser.weeks.slice((resUser.weeks.length - 10 > 0) ? resUser.weeks.length - 10 : 0 , resUser.weeks.length)
+                tmp.forEach(week => {
+                    addArr.push(week.a)
+                    delArr.push(week.d)
+                    dateArr.push(week.w)
+                })
+            }
+        })
     })
-    return dataResponse
+    return {addArr, delArr, dateArr}
 }
 
 // obselete
