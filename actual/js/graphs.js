@@ -45,12 +45,7 @@ let drawCommitTimeRibbon = function (theArr, names, divName) {
 }
 
 let drawLangPie = function (langStats, repoNames) {
-    // console.log({ totalLOC: getTotalLocAndLocsByLang(langStats, repoNames.data.map(a => a.name)) })
     let labels = genLabels(getTotalLocAndLocsByLang(langStats, repoNames.data.map(a => a.name)))
-    // console.log(labels.ids)
-    // console.log(labels.labels)
-    // console.log(labels.parents)
-    // console.log(labels.values)
     var data = [
         {
             "type": "sunburst",
@@ -66,9 +61,5 @@ let drawLangPie = function (langStats, repoNames) {
     var layout = {
         "margin": { "l": 0, "r": 0, "b": 0, "t": 0 },
     };
-
-
     Plotly.newPlot('myDiv2d', data, layout)
-
-    return
 }

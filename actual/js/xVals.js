@@ -76,7 +76,6 @@ let genLabels = function(splitData){
         })
         
     }
-    // console.log({labels:labels, parents:parents, values:values, ids:ids})
     return {labels:labels, parents:parents, values:values, ids:ids}
 }
 
@@ -116,35 +115,3 @@ let preParseChurnNames = function(data, repoNames, authorName){
     })
     return resultObj;
 }
-
-// obselete
-// let getLangBreakdown = function(rawLangStats, names){
-//     let langBreakList = []
-//     rawLangStats.forEach((repo, index) => {
-//         for(var lang in repo){
-//             if(!(langBreakList.hasOwnProperty(lang))){
-//                 langBreakList[lang] = [{repo:names[index], LOC:repo[lang]}]
-//             }else{
-//                 langBreakList[lang].push({repo:names[index], LOC:repo[lang]})
-//             }
-//         }
-//     })
-//     return langBreakList
-// }
-
-
-
-//obselete
-// let getLocByLang = function (rawLangStats) {
-//     let retObj = []
-//     rawLangStats.forEach(e => {
-//         for (var lang in e) {
-//             if (!(retObj.hasOwnProperty(lang))) {
-//                 retObj[lang] = e[lang]
-//             } else {
-//                 retObj[lang] += e[lang]
-//             }
-//         }
-//     })
-//     return retObj
-// }

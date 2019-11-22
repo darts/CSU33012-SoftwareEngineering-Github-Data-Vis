@@ -85,9 +85,7 @@ let launcher = function (usrName) {
 
 let simplifyCommitTimes = function (rawData, names) {
     let combArr = new Array(7).fill(0)
-    // console.log({arr:combArr, dl:rawData[0].length})
     combArr.forEach((elem, index) => { combArr[index] = new Array(24).fill(0) })
-    // console.log({array:combArr, expected: new Array(24).fill(0)})
     rawData.forEach(repo => {
         try {
             repo.forEach(slice => {
@@ -98,7 +96,6 @@ let simplifyCommitTimes = function (rawData, names) {
         }
     })
     cachedGraphData = { ribbon: { combArr: combArr, names: names, div: 'myDiv' }, line: { combArr: combArr, days: days, div: 'myDiv' } }
-    // drawCommitTimeRibbon(combArr, names)
     drawCommitTimeGraphs(combArr, days, 'myDiv')
     return combArr
 }
