@@ -112,7 +112,8 @@ let getCommitAmounts = function (repos) {
         }))
     })
     Promise.all(pAr).then(e => {
-        console.log(calcChurn(e.map(a => a.data), repos.data.map(a => a.name), input))
+        // console.log(calcChurn(e.map(a => a.data), repos.data.map(a => a.name), input))
+        console.log(preParseChurnNames(e.map(a => a.data), repos.data.map(a => a.name), input))
         // console.log(e.map(a => a.data))
     })
     // Promise.all(pAr).then(resp => {
@@ -125,10 +126,10 @@ let getCommitAmounts = function (repos) {
 //***************************************************************
 
 let input = window.prompt("Pick a user:", "darts");
+let octokit;
 if (input === null)
     window.location.reload(false)
 else {
-    let octokit;
     if (env.AUTH_TOKEN !== undefined) {
         octokit = Octokit({
             auth: env.AUTH_TOKEN,

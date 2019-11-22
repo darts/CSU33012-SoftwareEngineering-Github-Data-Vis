@@ -85,6 +85,7 @@ let calcChurn = function(dataResponse, names, userName){
     let addArr = []
     let delArr = []
     let dateArr = []
+    console.error(dataResponse)
     dataResponse.forEach(resp => {
         resp.forEach(resUser => {
             if(resUser.author.login === userName){
@@ -98,6 +99,22 @@ let calcChurn = function(dataResponse, names, userName){
         })
     })
     return {addArr, delArr, dateArr}
+}
+
+// Takes the response from an array of Contributor Stats requests containing data on commits, lines written, lines deleted
+// Adds them to an object with their name as the key
+// Keeps only commit data from this author 
+let preParseChurnNames = function(data, repoNames, authorName){
+    let i = 0
+    let resultObj = []
+    data.forEach(repo => {
+        repo.forEach(contributorStats => {
+            if(contributorStats.author.login === authorName)
+                resultObj[repoNames[i]] = contributorStats.weeks
+        })
+        i+=1
+    })
+    return resultObj;
 }
 
 // obselete
