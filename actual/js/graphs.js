@@ -65,7 +65,7 @@ let drawLangPie = function (langStats, repoNames) {
 }
 
 let drawBarChartsShort = function(repoName){
-    drawBarCharts(repoName, fillScrollBarDates(repoName))
+    drawBarCharts(repoName, fillScrollBarDates(repoName, namesS,0).date)
 }
 
 let drawBarCharts = function(repoName, endDate){

@@ -109,8 +109,12 @@ let getCommitAmounts = function (repos) {
         }))
     })
     Promise.all(pAr).then(e => {
-        preParsedValues = preParseChurnNames(e.map(a => a.data), repos.data.map(a => a.name), input)
-        fillScrollBarRepoNames(repos.data.map(a => a.name))
+        let tmp = preParseChurnNames2(e.map(a => a.data), repos.data.map(a => a.name), input)
+        preParsedValues = tmp.preParse
+        namesS = tmp.repoNames
+        fillScrollBarRepoNames(tmp.repoNames)
+    }).catch(e => {
+        console.error(e)
     })
 }
 
