@@ -45,12 +45,7 @@ let drawCommitTimeRibbon = function (theArr, names, divName) {
 }
 
 let drawLangPie = function (langStats, repoNames) {
-    // console.log({ totalLOC: getTotalLocAndLocsByLang(langStats, repoNames.data.map(a => a.name)) })
     let labels = genLabels(getTotalLocAndLocsByLang(langStats, repoNames.data.map(a => a.name)))
-    console.log(labels.ids)
-    console.log(labels.labels)
-    console.log(labels.parents)
-    console.log(labels.values)
     var data = [
         {
             "type": "sunburst",
@@ -66,9 +61,47 @@ let drawLangPie = function (langStats, repoNames) {
     var layout = {
         "margin": { "l": 0, "r": 0, "b": 0, "t": 0 },
     };
-
-
     Plotly.newPlot('myDiv2d', data, layout)
+}
 
-    return
+let drawBarChartsShort = function(repoName){
+    drawBarCharts(repoName, fillScrollBarDates(repoName, namesS,0).date)
+}
+
+let drawBarCharts = function(repoName, endDate){
+    let a = getValsStartingAt(repoName,preParsedValues[repoName], endDate)
+
+    var trace1 = {
+        x: a.dates,
+        y: a.addList,
+        type: 'bar',
+        name: 'Additions',
+        marker: {
+          color: 'rgb(49,130,189)',
+          opacity: 0.7,
+        }
+      };
+      
+      var trace2 = {
+        x: a.dates,
+        y: a.delList,
+        type: 'bar',
+        name: 'Deletions',
+        marker: {
+          color: 'rgb(204,204,204)',
+          opacity: 0.5
+        }
+      };
+      
+      var data = [trace1, trace2];
+      
+      var layout = {
+        title: 'Additions vs Deletions',
+        xaxis: {
+          tickangle: -45
+        },
+        barmode: 'group'
+      };
+      
+      Plotly.newPlot('churn', data, layout);
 }

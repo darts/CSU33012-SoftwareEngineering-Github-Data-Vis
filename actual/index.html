@@ -15,7 +15,7 @@
     <script src="libs/octokit-rest.min.js"></script>
     <!--  -->
     <script src="js/xVals.js"></script>
-    
+    <!-- <script src="libs/d3-force.v2.min.js"></script> -->
    
 </head>
 
@@ -23,7 +23,10 @@
 
     <div style="width: 600px;height: 50%;" id="myDiv"></div>
     <div style="width: 600px;height: 50%;" id="myDiv2d"></div>
+    <div style="width: 800px;height: 40%;" id="churn"></div>
     <button onclick="switchCommitTimeGraph()">Click me</button> 
+    <select id="dropdownRepo" name="selectRepo" onmousedown="if(this.options.length>5){this.size=5;}" onchange='this.size=0;' onblur="this.size=0;"></select>
+    <select id="dropdownDate" name="selectDate" onmousedown="if(this.options.length>5){this.size=5;}" onchange='this.size=0;' onblur="this.size=0;"></select>
     <script src="js/pageInteraction.js"></script>
     <script src="js/graphs.js"></script>
     <script src="js/keyVille.js"></script>
