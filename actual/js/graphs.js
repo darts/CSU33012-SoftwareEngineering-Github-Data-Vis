@@ -69,9 +69,7 @@ let drawBarChartsShort = function(repoName){
 }
 
 let drawBarCharts = function(repoName, endDate){
-    // console.log({repoName: repoName, endDate:endDate});
-    // console.log({preParsedValues:preParsedValues[repoName], time: new Date(endDate).getTime()/1000})
-    let a = getValsStartingAt(repoName,preParsedValues[repoName], new Date(endDate).getTime()/1000)
+    let a = getValsStartingAt(repoName,preParsedValues[repoName], endDate)
 
     var trace1 = {
         x: a.dates,

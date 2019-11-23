@@ -143,7 +143,7 @@ let preParseChurnNames2 = function (data, repoNames, authorName) {
                 }
             }
         } else {
-            console.warn(`Empty repo '${repoNames[i]}' skipped and removed`)
+            console.warn(`Empty repo '${repoNames[i]}' skipped and removed`, repo)
             newNames.splice(newNames.indexOf(repoNames[i]), 1)
         }
     })
@@ -179,14 +179,15 @@ let fillScrollBarRepoNames = function (names) {
 let fillScrollBarDates = function (name, names, num) {
     document.getElementById("dropdownDate").innerHTML = ""
     try {
-        preParsedValues[name].map(e => e.w).map(e => new Date(e * 1000)).map(e => e.toDateString()).forEach(date => {
-            document.getElementById("dropdownDate").innerHTML = `<option onclick="drawBarCharts('${name}','${date}')">${date}</option>` + document.getElementById("dropdownDate").innerHTML
+        preParsedValues[name].map(e => e.w).forEach(timestamp => {
+            document.getElementById("dropdownDate").innerHTML = `<option onclick="drawBarCharts('${name}','${timestamp}')">${new Date(timestamp*1000).toDateString()}</option>` + document.getElementById("dropdownDate").innerHTML
         })
     } catch (e) {
         console.error(`Could not add date to dropdown... Skipping \n ${e}`)
         return fillScrollBarDates(names[num + 1], names, num + 1)
     }
-    return { num: num, date: new Date(preParsedValues[name][preParsedValues[name].length - 1].w * 1000).toDateString() }
+    // console.log(preParsedValues[name])
+    return { num: num, date: preParsedValues[name][preParsedValues[name].length-(num+1)].w }
 }
 
 // takes an obj 'repo' -> an array of additions and deletions of the repo
@@ -208,6 +209,7 @@ let getValsStartingAt = function (repoName, repo, date) {
     if (!(cachedWeeks.repo === repoName)) {
         cachedWeeks.data = convertWeeksToObj(repo)
         cachedWeeks.repo = repoName
+        console.log({cachedRepo:repoName, cachedData:cachedWeeks.data})
     }
 
     dateList.forEach(date => {
@@ -215,7 +217,7 @@ let getValsStartingAt = function (repoName, repo, date) {
             addList.push(cachedWeeks.data[date].a)
             delList.push(cachedWeeks.data[date].d)
         } else {
-            console.warn(`cannot get data for week ${new Date(date * 1000).toDateString()}, padding with 0s`)
+            console.warn(`cannot get data for week ${new Date(date * 1000).toDateString()} (${date}), padding with 0s`)
             addList.push(0)
             delList.push(0)
         }
