@@ -5,28 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Visualisation</title>
+
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
     <script src="libs/d3.v5.min.js"></script>
     <script src="libs/jquery-3.4.1.min.js"></script>
     <script src="libs/underscore-min.js"></script>
-    <!-- <script src="libs/gh3.js"></script> -->
+
     <script src="libs/plotly-latest.min.js"></script>
-    <!-- <script src="https://unpkg.com/github-api/dist/GitHub.bundle.min.js"></script> -->
 
     <script src="libs/octokit-rest.min.js"></script>
-    <!--  -->
+    
     <script src="js/xVals.js"></script>
-    <!-- <script src="libs/d3-force.v2.min.js"></script> -->
-   
 </head>
 
 <body>
 
-    <div style="width: 600px;height: 50%;" id="myDiv"></div>
+    <div class="slide-in-top" id="commitContainer">
+        <div class="slide-in-top" id="myDiv"></div>
+    </div>
     <div style="width: 600px;height: 50%;" id="myDiv2d"></div>
     <div style="width: 800px;height: 40%;" id="churn"></div>
-    <button onclick="switchCommitTimeGraph()">Click me</button> 
-    <select id="dropdownRepo" name="selectRepo" onmousedown="if(this.options.length>5){this.size=5;}" onchange='this.size=0;' onblur="this.size=0;"></select>
-    <select id="dropdownDate" name="selectDate" onmousedown="if(this.options.length>5){this.size=5;}" onchange='this.size=0;' onblur="this.size=0;"></select>
+    <button onclick="switchCommitTimeGraph()">Click me</button>
+    <select id="dropdownRepo" name="selectRepo" onmousedown="if(this.options.length>5){this.size=5;}"
+        onchange='this.size=0;' onblur="this.size=0;"></select>
+    <select id="dropdownDate" name="selectDate" onmousedown="if(this.options.length>5){this.size=5;}"
+        onchange='this.size=0;' onblur="this.size=0;"></select>
     <script src="js/pageInteraction.js"></script>
     <script src="js/graphs.js"></script>
     <script src="js/keyVille.js"></script>
