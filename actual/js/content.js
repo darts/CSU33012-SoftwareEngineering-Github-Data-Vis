@@ -53,11 +53,11 @@ let getCommuStats = function (result) {
 // ********************
 // get generic user data
 let getUserStats = function (usrName) {
-    let thePromise = octokit.users.getByUsername({ username: usrName });
+    let thePromise = octokit.users.getByUsername({ username: usrName })
     thePromise.then(function (result) {
-        console.log(result); // "Stuff worked!"
+        updateUserOnPage(result.data)
     }, function (err) {
-        console.log(err); // Error: "It broke"
+        console.log(err)
     });
 }
 
@@ -71,7 +71,7 @@ let launcher = function (usrName) {
     usrPromise.then(function (result) {
         getPunchAbility(result) // get punch cards 
 
-        // getUserStats(input); //get a user's stats
+        getUserStats(input); //get a user's stats
 
         getLangStats(result) // get languages
 
@@ -95,8 +95,8 @@ let simplifyCommitTimes = function (rawData, names) {
             console.error(e)
         }
     })
-    cachedGraphData = { ribbon: { combArr: combArr, names: names, div: 'myDiv' }, line: { combArr: combArr, days: days, div: 'myDiv' } }
-    drawCommitTimeGraphs(combArr, days, 'myDiv')
+    cachedGraphData = { ribbon: { combArr: combArr, names: names, div: 'commitGraph' }, line: { combArr: combArr, days: days, div: 'commitGraph' } }
+    drawCommitTimeGraphs(combArr, days, 'commitGraph')
     return combArr
 }
 

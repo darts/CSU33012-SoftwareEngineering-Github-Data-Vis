@@ -61,7 +61,7 @@ let drawLangPie = function (langStats, repoNames) {
     var layout = {
         "margin": { "l": 0, "r": 0, "b": 0, "t": 0 },
     };
-    Plotly.newPlot('myDiv2d', data, layout)
+    Plotly.newPlot('langSunBurst', data, layout)
 }
 
 let drawBarChartsShort = function(repoName){
@@ -69,6 +69,7 @@ let drawBarChartsShort = function(repoName){
 }
 
 let drawBarCharts = function(repoName, endDate){
+
     let a = getValsStartingAt(repoName,preParsedValues[repoName], endDate)
 
     var trace1 = {
@@ -104,4 +105,16 @@ let drawBarCharts = function(repoName, endDate){
       };
       
       Plotly.newPlot('churn', data, layout);
+}
+
+let updateUserOnPage = function(data){
+    document.getElementById("userData").innerHTML = `<img src="${data.avatar_url}"></img>
+    Followers: ${data.followers}  \n
+    Following: ${data.following}  \n
+    Public Repos: ${data.public_repos}  \n
+    Hireable: ${data.hireable == null ? "Not published" : data.hireable}  \n
+    Username:${data.login}  \n
+    Name: ${data.name == null ? "Not published" : data.name}  \n
+    Bio: ${data.bio}  \n
+    Location: ${data.location}  \n`
 }
