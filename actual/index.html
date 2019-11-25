@@ -5,28 +5,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Visualisation</title>
+    <script src="libs/jquery-3.4.1.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="libs/bootstrap.min.css">
+
+    <script src="libs/bootstrap.min.js"></script>
 
     <script src="libs/d3.v5.min.js"></script>
-    <script src="libs/jquery-3.4.1.min.js"></script>
+
     <script src="libs/underscore-min.js"></script>
 
     <script src="libs/plotly-latest.min.js"></script>
 
     <script src="libs/octokit-rest.min.js"></script>
-    
+
     <script src="js/xVals.js"></script>
 </head>
 
 <body>
 
-    <div id="userData"></div>
-    <div class="slide-in-top" id="commitContainer">
-        <div class="slide-in-top" id="myDiv"></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="slide-in-top" style="background-color: #cccccc; border-radius: 5%; float:left"
+                    id="userData"></div>
+            </div>
+            <div class="col-lg-8 col-md-8" style="float:right;">
+                <div class="row">
+                    <div style="width: 45%;height: 45%;float: left;" id="langSunBurst"></div>
+                    <div style="width: 45%;height: 45%;float: right;" id="commitGraph"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+                        <div class="slide-in-top" style="float:right; background-color: #cccccc;" id="commitContainer">
+                            <div style="width: 80%;height: 50%;" id="churn"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div style="width: 600px;height: 50%;" id="myDiv2d"></div>
-    <div style="width: 800px;height: 40%;" id="churn"></div>
+
     <button onclick="switchCommitTimeGraph()">Click me</button>
     <select id="dropdownRepo" name="selectRepo" onmousedown="if(this.options.length>5){this.size=5;}"
         onchange='this.size=0;' onblur="this.size=0;"></select>

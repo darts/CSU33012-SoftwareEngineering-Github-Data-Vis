@@ -1,8 +1,6 @@
 .slide-in-top {
-    width: 600px;
-    height: 50%;
-	-webkit-animation: slide-in-top 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
-            animation: slide-in-top 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+	-webkit-animation: slide-in-top 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) 1s both;
+	        animation: slide-in-top 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) 1s both;
 }
 
  @-webkit-keyframes slide-in-top {
@@ -29,4 +27,6 @@
       opacity: 1;
     }
   }
+  
+  
   

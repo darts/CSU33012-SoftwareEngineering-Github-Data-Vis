@@ -209,7 +209,6 @@ let getValsStartingAt = function (repoName, repo, date) {
     if (!(cachedWeeks.repo === repoName)) {
         cachedWeeks.data = convertWeeksToObj(repo)
         cachedWeeks.repo = repoName
-        console.log({cachedRepo:repoName, cachedData:cachedWeeks.data})
     }
 
     dateList.forEach(date => {
@@ -222,5 +221,5 @@ let getValsStartingAt = function (repoName, repo, date) {
             delList.push(0)
         }
     })
-    return { dates: dateList.map(e => new Date(e * 1000).toDateString()), addList: addList, delList: delList }
+    return { dates: dateList.map(e => new Date(e * 1000).toDateString()).map(e => e.substring(4,e.length)), addList: addList, delList: delList }
 }

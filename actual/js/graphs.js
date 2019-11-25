@@ -15,7 +15,9 @@ let drawCommitTimeGraphs = function (theArr, names, divName) {
         }
         traceArr.push(trace)
     })
-    let layout = { title: 'Commits by day and time', xaxis: { title: "Time of day (24hr)" }, yaxis: { title: "Number of commits" } };
+    let layout = {title: 'Commits by day and time',
+                  xaxis: { title: "Time of day (24hr)" }, 
+                  yaxis: { title: "Number of commits" } };
     Plotly.newPlot(divName, traceArr, layout);
 }
 
@@ -25,9 +27,11 @@ let drawCommitTimeRibbon = function (theArr, names, divName) {
     let xArr = buildTimes()
     let traceArr = []
 
+    
+
     theArr.forEach((set, index) => {
-        let anArr = new Array(168).fill(index)
-        // console.log(actXList[index])
+        // let anArr = new Array(168).fill(index)
+        // console.log({z:dubArr(set), x: genPairs(168), y:actXList[index]})
         let trace = {
             z: dubArr(set),
             x: genPairs(168),
@@ -40,7 +44,12 @@ let drawCommitTimeRibbon = function (theArr, names, divName) {
         }
         traceArr.push(trace)
     })
-    let layout = { showlegend: false, title: 'Commits by day and time', scene: { xaxis: { title: "Time of day (24hr)" }, yaxis: { title: "Day of the week (Sun - Sat)" }, zaxis: { title: "Number of commits" } } };
+    let layout = { 
+        showlegend: false,
+        title: 'Commits by day and time',
+        scene: {xaxis: { title: "Time of day (24hr)" }, 
+                yaxis: { title: "Day of the week (Sun - Sat)" },
+                zaxis: { title: "Number of commits" } } };
     Plotly.newPlot(divName, traceArr, layout);
 }
 
@@ -71,7 +80,6 @@ let drawBarChartsShort = function(repoName){
 let drawBarCharts = function(repoName, endDate){
 
     let a = getValsStartingAt(repoName,preParsedValues[repoName], endDate)
-
     var trace1 = {
         x: a.dates,
         y: a.addList,
@@ -104,11 +112,11 @@ let drawBarCharts = function(repoName, endDate){
         barmode: 'group'
       };
       
-      Plotly.newPlot('churn', data, layout);
+      Plotly.newPlot('churn', data, layout,{ responsive: true });
 }
 
 let updateUserOnPage = function(data){
-    document.getElementById("userData").innerHTML = `<img src="${data.avatar_url}"></img>
+    document.getElementById("userData").innerHTML = `<img src="${data.avatar_url}" class="col-lg-11 col-md-11" style="margin:auto; margin-top:10px ;padding=10px 10px 10px 10px; border-radius:15%; width:100%;"></img>
     Followers: ${data.followers}  \n
     Following: ${data.following}  \n
     Public Repos: ${data.public_repos}  \n
