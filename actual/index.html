@@ -24,31 +24,13 @@
     <div class="major-box">
         <div class="s-bar card minor-box">
             <form id="inputForm" action="startSearch()">
-                Search for a User: <input type="text" id="userName" name="userName" value="username">
-                Use an auth token: <input type="text" id="authToken" name="authToken" value="authToken">
+                Search for a User: <input type="text" id="userName" name="userName" placeholder="username">
+                Use an auth token: <input type="text" id="authToken" name="authToken" placeholder="authToken">
                 <button type="submit" class="card">Search</button>
             </form>
         </div>
-        <div class="grid-container">
-            <div class="user-card card slide-in-left" id="userData"></div>
-            <!-- <div> -->
-            <!-- <div> -->
-            <div class="card slide-in-top" id="langSunBurst"></div>
-            <div class="card mini-grid-container slide-in-right">
-                <img src="libs/swap_button.png" onclick="switchCommitTimeGraph()" class="small-button small-mini">
-                <div class="big-mini" id="commitGraph"></div>
-            </div>
-            <!-- </div> -->
-            <div class="card wide-boi long-grid-container slide-in-bottom">
-                <select class="long-thin" id="dropdownRepo" name="selectRepo"
-                    onmousedown="if(this.options.length>5){this.size=5;}" onchange='this.size=0;'
-                    onblur="this.size=0;"></select>
-                <select class="long-thin" id="dropdownDate" name="selectDate"
-                    onmousedown="if(this.options.length>5){this.size=5;}" onchange='this.size=0;'
-                    onblur="this.size=0;"></select>
-                <div class="long-long" id="churn"></div>
-            </div>
-            <!-- </div> -->
+        <div id="cardsContainer">
+            
         </div>
     </div>
     <script src="js/pageInteraction.js"></script>

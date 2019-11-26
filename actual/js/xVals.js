@@ -163,6 +163,7 @@ let convertWeeksToObj = function (weeks) {
 // then draws the bar chart with the first repo
 // names is an array of repo names
 let fillScrollBarRepoNames = function (names) {
+    document.getElementById("dropdownRepo").innerHTML=""
     names.forEach(name => {
         try {
             document.getElementById("dropdownRepo").innerHTML += `<option class="dropdown-opt" onclick="drawBarChartsShort('${name}')">${name}</option>`

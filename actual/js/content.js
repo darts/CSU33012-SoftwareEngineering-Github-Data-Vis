@@ -127,8 +127,7 @@ let getCommitAmounts = function (repos) {
 let search = document.getElementById("inputForm");
 search.addEventListener("submit", theBar => {
     theBar.preventDefault()
-    console.log(document.getElementById("authToken").value)
-    startSearch(document.getElementById("userName").value, (document.getElementById("authToken").value !== "" ? undefined : document.getElementById("authToken").value) )
+    startSearch(document.getElementById("userName").value, (document.getElementById("authToken").value !== "" ? undefined : document.getElementById("authToken").value))
 })
 
 let octokit
@@ -143,21 +142,28 @@ let startSearch = function (inputF, userAuthToken) {
                 auth: env.AUTH_TOKEN,
                 userAgent: 'GitHub API Access and Visualisation'
             });
-        } else if (userAuthToken !== undefined){
+        } else if (userAuthToken !== undefined) {
             octokit = Octokit({
                 auth: userAuthToken,
                 userAgent: 'GitHub API Access and Visualisation'
             });
-        }else{
+        } else {
             console.log("No Access Token Found! \n Rates will be limited.")
             octokit = Octokit({
                 userAgent: 'GitHub API Access and Visualisation'
             });
         }
-        launcher(inputF);
+        injectCards()
+        launcher(inputF)
     }
 }
 
-let injectCards = function(){
-    
+let injectCards = function () {
+    document.getElementById("cardsContainer").innerHTML = '<div class="grid-container"><div class="user-card card slide-in-left" id="userData"><div class="bouncing-loader"><div></div><div></div><div></div></div></div><div class="card slide-in-top" id="langSunBurst"><div class="bouncing-loader"><div></div><div></div><div></div></div></div><div class="card mini-grid-container slide-in-right"><img src="libs/swap_button.png" onclick="switchCommitTimeGraph()" class="small-button small-mini"><div class="big-mini" id="commitGraph"><div class="bouncing-loader"><div></div><div></div><div></div></div></div></div><div class="card wide-boi long-grid-container slide-in-bottom"><select class="long-thin" id="dropdownRepo" name="selectRepo"onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.size=0;" onblur="this.size=0;"></select><select class="long-thin" id="dropdownDate" name="selectDate"onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.size=0;"onblur="this.size=0;"></select><div class="long-long" id="churn"><div id="delBouncy"><div class="bouncing-loader"><div></div><div></div><div></div></div></div></div></div></div>'
+    let observer = new MutationObserver(function (mutationRecords) {
+        document.getElementById("delBouncy").innerHTML =""
+    })
+    observer.observe(document.getElementById("churn"), {childList:true})
 }
+
+
