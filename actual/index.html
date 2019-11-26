@@ -5,15 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Visualisation</title>
-    <script src="libs/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" type="text/css" href="styles.css">
 
-    <script src="libs/d3.v5.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
 
-    <script src="libs/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
 
-    <script src="libs/plotly-latest.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <script src="libs/octokit-rest.min.js"></script>
 
@@ -25,12 +26,13 @@
         <div class="s-bar card minor-box">
             <form id="inputForm" action="startSearch()">
                 Search for a User: <input type="text" id="userName" name="userName" placeholder="username">
-                Use an auth token: <input type="text" id="authToken" name="authToken" placeholder="authToken (optional)">
+                Use an auth token: <input type="text" id="authToken" name="authToken"
+                    placeholder="authToken (optional)">
                 <button type="submit" class="card">Search</button>
             </form>
         </div>
         <div id="cardsContainer">
-            
+
         </div>
     </div>
     <script src="js/pageInteraction.js"></script>
