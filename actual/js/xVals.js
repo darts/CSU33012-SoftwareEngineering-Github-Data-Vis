@@ -165,7 +165,7 @@ let convertWeeksToObj = function (weeks) {
 let fillScrollBarRepoNames = function (names) {
     names.forEach(name => {
         try {
-            document.getElementById("dropdownRepo").innerHTML += `<option onclick="drawBarChartsShort('${name}')">${name}</option>`
+            document.getElementById("dropdownRepo").innerHTML += `<option class="dropdown-opt" onclick="drawBarChartsShort('${name}')">${name}</option>`
         } catch (e) {
             console.error(`Could not add repo to dropdown... Skipping \n ${e}`)
         }
@@ -180,7 +180,7 @@ let fillScrollBarDates = function (name, names, num) {
     document.getElementById("dropdownDate").innerHTML = ""
     try {
         preParsedValues[name].map(e => e.w).forEach(timestamp => {
-            document.getElementById("dropdownDate").innerHTML = `<option onclick="drawBarCharts('${name}','${timestamp}')">${new Date(timestamp*1000).toDateString()}</option>` + document.getElementById("dropdownDate").innerHTML
+            document.getElementById("dropdownDate").innerHTML = `<option class="dropdown-opt" onclick="drawBarCharts('${name}','${timestamp}')">${new Date(timestamp*1000).toDateString()}</option>` + document.getElementById("dropdownDate").innerHTML
         })
     } catch (e) {
         console.error(`Could not add date to dropdown... Skipping \n ${e}`)

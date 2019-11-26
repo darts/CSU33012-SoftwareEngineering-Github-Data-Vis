@@ -26,20 +26,22 @@
         <!-- <div> -->
         <!-- <div> -->
         <div class="card" id="langSunBurst"></div>
-        <div class="card mini-grid-container" >
-                <img src="libs/swap_button.png" onclick="switchCommitTimeGraph()" class="small-button small-mini">
-                <div class="big-mini" id="commitGraph"></div>
+        <div class="card mini-grid-container">
+            <img src="libs/swap_button.png" onclick="switchCommitTimeGraph()" class="small-button small-mini">
+            <div class="big-mini" id="commitGraph"></div>
         </div>
         <!-- </div> -->
-        <div class="card wide-boi" id="churn"></div>
+        <div class="card wide-boi long-grid-container">
+            <select class="long-thin" id="dropdownRepo" name="selectRepo"
+                onmousedown="if(this.options.length>5){this.size=5;}" onchange='this.size=0;'
+                onblur="this.size=0;"></select>
+            <select class="long-thin" id="dropdownDate" name="selectDate"
+                onmousedown="if(this.options.length>5){this.size=5;}" onchange='this.size=0;'
+                onblur="this.size=0;"></select>
+            <div class="long-long" id="churn"></div>
+        </div>
         <!-- </div> -->
     </div>
-
-    
-    <select id="dropdownRepo" name="selectRepo" onmousedown="if(this.options.length>5){this.size=5;}"
-        onchange='this.size=0;' onblur="this.size=0;"></select>
-    <select id="dropdownDate" name="selectDate" onmousedown="if(this.options.length>5){this.size=5;}"
-        onchange='this.size=0;' onblur="this.size=0;"></select>
 
     <script src="js/pageInteraction.js"></script>
     <script src="js/graphs.js"></script>
