@@ -36,6 +36,12 @@
 .user-card {
   grid-row-start: 1;
   grid-row-end: 3;
+  text-align: left;
+}
+
+.user-text {
+  text-align: left;
+  margin-left: 10px;
 }
 
 .mini-grid-container {
@@ -72,8 +78,9 @@
 }
 
 .long-grid-container {
+  margin: 0%;
   display: grid;
-  grid-template-rows: 5% 95%;
+  grid-template-rows: 12% 88%;
 }
 
 .long-long {
@@ -89,7 +96,7 @@
   width: auto;
 }
 
-.dropdown-opt{
+.dropdown-opt {
   position: relative;
   width: auto;
 }

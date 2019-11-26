@@ -123,12 +123,12 @@ let drawBarCharts = function (repoName, endDate) {
 
 let updateUserOnPage = function (data) {
     document.getElementById("userData").innerHTML = `<img src="${data.avatar_url}" style="margin-top:0px ;padding=1px 1px 1px 1px; border-radius:5px; width:95%; align:left"></img><br/>
-    Followers: ${data.followers}  \n<br/>
+    <p class="user-text">Followers: ${data.followers}  \n<br/>
     Following: ${data.following}  \n<br/>
     Public Repos: ${data.public_repos}  \n<br/>
     Hireable: ${data.hireable == null ? "Not published" : data.hireable}  \n<br/>
     Username:${data.login}  \n<br/>
     Name: ${data.name == null ? "Not published" : data.name}  \n<br/>
     Bio: ${data.bio}  \n<br/>
-    Location: ${data.location}  \n`
+    Location: ${data.location}</p>  \n`
 }
