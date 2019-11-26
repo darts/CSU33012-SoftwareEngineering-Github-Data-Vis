@@ -129,7 +129,7 @@ let getCommitAmounts = function (repos) {
 let search = document.getElementById("inputForm");
 search.addEventListener("submit", theBar => {
     theBar.preventDefault()
-    startSearch(document.getElementById("userName").value, (document.getElementById("authToken").value !== "" ? undefined : document.getElementById("authToken").value))
+    startSearch(document.getElementById("userName").value, (document.getElementById("authToken").value !== "" ? document.getElementById("authToken").value : undefined))
 })
 
 let octokit
