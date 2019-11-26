@@ -89,9 +89,11 @@ let simplifyCommitTimes = function (rawData, names) {
     combArr.forEach((elem, index) => { combArr[index] = new Array(24).fill(0) })
     rawData.forEach(repo => {
         try {
-            repo.forEach(slice => {
-                combArr[slice[0]][slice[1]] += slice[2]
-            })
+            if (repo !== undefined) {
+                repo.forEach(slice => {
+                    combArr[slice[0]][slice[1]] += slice[2]
+                })
+            }
         } catch (e) {
             console.error(e)
         }
@@ -161,9 +163,9 @@ let startSearch = function (inputF, userAuthToken) {
 let injectCards = function () {
     document.getElementById("cardsContainer").innerHTML = '<div class="grid-container"><div class="user-card card slide-in-left" id="userData"><div class="bouncing-loader"><div></div><div></div><div></div></div></div><div class="card slide-in-top" id="langSunBurst"><div class="bouncing-loader"><div></div><div></div><div></div></div></div><div class="card mini-grid-container slide-in-right"><img src="libs/swap_button.png" onclick="switchCommitTimeGraph()" class="small-button small-mini"><div class="big-mini" id="commitGraph"><div class="bouncing-loader"><div></div><div></div><div></div></div></div></div><div class="card wide-boi long-grid-container slide-in-bottom"><select class="long-thin" id="dropdownRepo" name="selectRepo"onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.size=0;" onblur="this.size=0;"></select><select class="long-thin" id="dropdownDate" name="selectDate"onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.size=0;"onblur="this.size=0;"></select><div class="long-long" id="churn"><div id="delBouncy"><div class="bouncing-loader"><div></div><div></div><div></div></div></div></div></div></div>'
     let observer = new MutationObserver(function (mutationRecords) {
-        document.getElementById("delBouncy").innerHTML =""
+        document.getElementById("delBouncy").innerHTML = ""
     })
-    observer.observe(document.getElementById("churn"), {childList:true})
+    observer.observe(document.getElementById("churn"), { childList: true })
 }
 
 

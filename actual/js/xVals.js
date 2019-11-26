@@ -135,16 +135,18 @@ let preParseChurnNames2 = function (data, repoNames, authorName) {
     let i = -1
     data.forEach(repo => {
         i += 1
-        if (repo.length > 0) {
-            for (let userData of repo) {
-                if (userData.author.login === authorName) {
-                    retObj[repoNames[i]] = userData.weeks
-                    continue
+        if (repo !== undefined) {
+            if (repo.length > 0) {
+                for (let userData of repo) {
+                    if (userData.author.login === authorName) {
+                        retObj[repoNames[i]] = userData.weeks
+                        continue
+                    }
                 }
+            } else {
+                console.warn(`Empty repo '${repoNames[i]}' skipped and removed`, repo)
+                newNames.splice(newNames.indexOf(repoNames[i]), 1)
             }
-        } else {
-            console.warn(`Empty repo '${repoNames[i]}' skipped and removed`, repo)
-            newNames.splice(newNames.indexOf(repoNames[i]), 1)
         }
     })
     return { preParse: retObj, repoNames: newNames }
@@ -153,9 +155,12 @@ let preParseChurnNames2 = function (data, repoNames, authorName) {
 
 let convertWeeksToObj = function (weeks) {
     let retObj = {};
-    weeks.forEach(e => {
-        retObj[e.w] = { a: e.a, d: e.d }
-    })
+    if (weeks !== undefined) {
+        weeks.forEach(e => {
+            if (e !== undefined)
+                retObj[e.w] = { a: e.a, d: e.d }
+        })
+    }
     return retObj
 }
 
@@ -163,7 +168,7 @@ let convertWeeksToObj = function (weeks) {
 // then draws the bar chart with the first repo
 // names is an array of repo names
 let fillScrollBarRepoNames = function (names) {
-    document.getElementById("dropdownRepo").innerHTML=""
+    document.getElementById("dropdownRepo").innerHTML = ""
     names.forEach(name => {
         try {
             document.getElementById("dropdownRepo").innerHTML += `<option class="dropdown-opt" onclick="drawBarChartsShort('${name}')">${name}</option>`
@@ -181,14 +186,14 @@ let fillScrollBarDates = function (name, names, num) {
     document.getElementById("dropdownDate").innerHTML = ""
     try {
         preParsedValues[name].map(e => e.w).forEach(timestamp => {
-            document.getElementById("dropdownDate").innerHTML = `<option class="dropdown-opt" onclick="drawBarCharts('${name}','${timestamp}')">${new Date(timestamp*1000).toDateString()}</option>` + document.getElementById("dropdownDate").innerHTML
+            document.getElementById("dropdownDate").innerHTML = `<option class="dropdown-opt" onclick="drawBarCharts('${name}','${timestamp}')">${new Date(timestamp * 1000).toDateString()}</option>` + document.getElementById("dropdownDate").innerHTML
         })
     } catch (e) {
         console.error(`Could not add date to dropdown... Skipping \n ${e}`)
         return fillScrollBarDates(names[num + 1], names, num + 1)
     }
     // console.log(preParsedValues[name])
-    return { num: num, date: preParsedValues[name][preParsedValues[name].length-(num+1)].w }
+    return { num: num, date: preParsedValues[name][preParsedValues[name].length - (num + 1)].w }
 }
 
 // takes an obj 'repo' -> an array of additions and deletions of the repo
@@ -222,5 +227,5 @@ let getValsStartingAt = function (repoName, repo, date) {
             delList.push(0)
         }
     })
-    return { dates: dateList.map(e => new Date(e * 1000).toDateString()).map(e => e.substring(4,e.length)), addList: addList, delList: delList }
+    return { dates: dateList.map(e => new Date(e * 1000).toDateString()).map(e => e.substring(4, e.length)), addList: addList, delList: delList }
 }
