@@ -84,7 +84,7 @@ let launcher = function (usrName) {
 }
 
 let simplifyCommitTimes = function (rawData, names) {
-    
+
     let combArr = new Array(7).fill(0)
     combArr.forEach((elem, index) => { combArr[index] = new Array(24).fill(0) })
     rawData.forEach(repo => {
@@ -124,26 +124,40 @@ let getCommitAmounts = function (repos) {
 //***************************************************************
 //***************************************************************
 
-let input = window.prompt("Pick a user:", "darts");
-let octokit;
-if (input === null)
-    window.location.reload(false)
-else {
-    if (env.AUTH_TOKEN !== undefined) {
-        octokit = Octokit({
-            auth: env.AUTH_TOKEN,
-            userAgent: 'myApp v1.2.3'
-        });
-    } else {
-        console.log("No Access Token Found! \n Rates will be limited.")
-        octokit = Octokit({
-            userAgent: 'myApp v1.2.3'
-        });
+let search = document.getElementById("inputForm");
+search.addEventListener("submit", theBar => {
+    theBar.preventDefault()
+    console.log(document.getElementById("authToken").value)
+    startSearch(document.getElementById("userName").value, (document.getElementById("authToken").value !== "" ? undefined : document.getElementById("authToken").value) )
+})
+
+let octokit
+let input
+let startSearch = function (inputF, userAuthToken) {
+    input = inputF
+    if (inputF === null)
+        window.location.reload(false)
+    else {
+        if (env.AUTH_TOKEN !== undefined) {
+            octokit = Octokit({
+                auth: env.AUTH_TOKEN,
+                userAgent: 'GitHub API Access and Visualisation'
+            });
+        } else if (userAuthToken !== undefined){
+            octokit = Octokit({
+                auth: userAuthToken,
+                userAgent: 'GitHub API Access and Visualisation'
+            });
+        }else{
+            console.log("No Access Token Found! \n Rates will be limited.")
+            octokit = Octokit({
+                userAgent: 'GitHub API Access and Visualisation'
+            });
+        }
+        launcher(inputF);
     }
-    launcher(input);
 }
 
-//TODO Some user graph showing followers and their followers as bubbles
-//TODO Add some ability to graph comments per repo, bar chart (3d based on time?)
-
-//[...Array(N).keys()]
+let injectCards = function(){
+    
+}
