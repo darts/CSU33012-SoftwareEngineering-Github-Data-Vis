@@ -8,11 +8,6 @@
     <script src="libs/jquery-3.4.1.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="libs/bootstrap.min.css"> -->
-
-    <!-- <script src="libs/bootstrap.min.js"></script> -->
 
     <script src="libs/d3.v5.min.js"></script>
 
@@ -25,46 +20,22 @@
     <script src="js/xVals.js"></script>
 </head>
 
-<body>
-
-
-    <!-- <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-3 col-md-3">
-                <div class="slide-in-top" style="background-color: #cccccc; border-radius: 5%; float:left"
-                    id="userData"></div>
-            </div>
-            <div class="col-lg-8 col-md-8">
-                <div class="row">
-                    <div class="panel panel-primary col-lg-6 col-md-6">
-                        <div class="col-lg-10 col-md-10 panel-body" id="langSunBurst"></div>
-                    </div>
-                    <div class="col-lg-6 col-md-6" id="commitGraph"></div>
-                   
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-8 col-md-8">
-                <div class="slide-in-top" style="float:right; background-color: #cccccc;" id="commitContainer">
-                    <div style="width: 80%;height: 50%;" id="churn"></div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
+<body style="background-color: rgb(180, 185, 159);">
     <div class="grid-container">
         <div class="user-card card" id="userData"></div>
         <!-- <div> -->
         <!-- <div> -->
         <div class="card" id="langSunBurst"></div>
-        <div class="card" id="commitGraph"></div>
+        <div class="card mini-grid-container" >
+                <img src="libs/swap_button.png" onclick="switchCommitTimeGraph()" class="small-button small-mini">
+                <div class="big-mini" id="commitGraph"></div>
+        </div>
         <!-- </div> -->
         <div class="card wide-boi" id="churn"></div>
         <!-- </div> -->
     </div>
 
-    <button onclick="switchCommitTimeGraph()">Click me</button>
+    
     <select id="dropdownRepo" name="selectRepo" onmousedown="if(this.options.length>5){this.size=5;}"
         onchange='this.size=0;' onblur="this.size=0;"></select>
     <select id="dropdownDate" name="selectDate" onmousedown="if(this.options.length>5){this.size=5;}"
