@@ -8,9 +8,11 @@
     <script src="libs/jquery-3.4.1.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <link rel="stylesheet" type="text/css" href="libs/bootstrap.min.css">
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="libs/bootstrap.min.css"> -->
 
-    <script src="libs/bootstrap.min.js"></script>
+    <!-- <script src="libs/bootstrap.min.js"></script> -->
 
     <script src="libs/d3.v5.min.js"></script>
 
@@ -26,26 +28,40 @@
 <body>
 
 
-    <div class="container-fluid">
+    <!-- <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="slide-in-top" style="background-color: #cccccc; border-radius: 5%; float:left"
                     id="userData"></div>
             </div>
-            <div class="col-lg-8 col-md-8" style="float:right;">
+            <div class="col-lg-8 col-md-8">
                 <div class="row">
-                    <div style="width: 45%;height: 45%;float: left;" id="langSunBurst"></div>
-                    <div style="width: 45%;height: 45%;float: right;" id="commitGraph"></div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-8 col-md-8">
-                        <div class="slide-in-top" style="float:right; background-color: #cccccc;" id="commitContainer">
-                            <div style="width: 80%;height: 50%;" id="churn"></div>
-                        </div>
+                    <div class="panel panel-primary col-lg-6 col-md-6">
+                        <div class="col-lg-10 col-md-10 panel-body" id="langSunBurst"></div>
                     </div>
+                    <div class="col-lg-6 col-md-6" id="commitGraph"></div>
+                   
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-8 col-md-8">
+                <div class="slide-in-top" style="float:right; background-color: #cccccc;" id="commitContainer">
+                    <div style="width: 80%;height: 50%;" id="churn"></div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="grid-container">
+        <div class="user-card card" id="userData"></div>
+        <!-- <div> -->
+        <!-- <div> -->
+        <div class="card" id="langSunBurst"></div>
+        <div class="card" id="commitGraph"></div>
+        <!-- </div> -->
+        <div class="card wide-boi" id="churn"></div>
+        <!-- </div> -->
     </div>
 
     <button onclick="switchCommitTimeGraph()">Click me</button>
@@ -53,6 +69,7 @@
         onchange='this.size=0;' onblur="this.size=0;"></select>
     <select id="dropdownDate" name="selectDate" onmousedown="if(this.options.length>5){this.size=5;}"
         onchange='this.size=0;' onblur="this.size=0;"></select>
+
     <script src="js/pageInteraction.js"></script>
     <script src="js/graphs.js"></script>
     <script src="js/keyVille.js"></script>
