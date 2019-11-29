@@ -127,8 +127,8 @@ let updateUserOnPage = function (data) {
     Following: ${data.following}  \n<br/>
     Public Repos: ${data.public_repos}  \n<br/>
     Hireable: ${data.hireable == null ? "Not published" : data.hireable}  \n<br/>
-    Username:${data.login}  \n<br/>
+    Username: ${data.login}  \n<br/>
     Name: ${data.name == null ? "Not published" : data.name}  \n<br/>
-    Bio: ${data.bio}  \n<br/>
+    Bio: ${data.bio == null ? "Not published" : data.bio}  \n<br/>
     Location: ${data.location}</p>  \n`
 }
