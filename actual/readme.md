@@ -2,7 +2,7 @@
 
 The code in this repo aims to provide more functionality to the user by providing insights into data gathered from a user.  
 
-The code runs entirely in the browser (https://darts.github.io/CSU33012-SoftwareEngineering-Github-Data-Vis/actual/index.html). The user can search for a particular GitHub user's statistics. To do this they simply type a username into the search bar. 
+The code runs entirely in the browser (https://darts.github.io/CSU33012-SoftwareEngineering-Github-Data-Vis/actual/index.html). The user can search for a particular GitHub user's statistics. To do this they simply type a username into the search bar.   
 ![loading](./images/gifs/darts/darts-loading.gif)  
 
 If the user wishes they can use an access token to allow for more requests per hour.  
